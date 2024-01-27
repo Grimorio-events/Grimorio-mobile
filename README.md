@@ -53,8 +53,25 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   // Lógica de la pantalla
 };
 ```
-
 En este ejemplo, LoginScreen es un componente funcional que utiliza TypeScript para definir las props. Utilizamos `React.FC` para tipar el componente funcional y `NativeStackNavigationProp` para tipar las props de navegación.
+
+### Actualizar types.ts
+
+Cuando se añade una nueva pantalla, se debe actualizar el archivo types.ts para reflejar los cambios en las rutas de navegación. Esto asegura un tipado fuerte y consistente en toda la aplicación, facilitando la gestión de las rutas y la navegación entre pantallas.
+
+Ejemplo de `types.ts`:
+
+```javascript
+// src/types/types.ts
+export type RootStackParamList = {
+  Home: undefined;   // No se esperan parámetros para la pantalla Home
+  Login: undefined;  // No se esperan parámetros para la pantalla Login
+  Signup: undefined; // No se esperan parámetros para la pantalla Signup
+  // ... puedes agregar más rutas y sus parámetros aquí
+};
+```
+
+Cada vez que agregues o modifiques una pantalla, asegúrate de reflejar esos cambios aquí, agregando o modificando las rutas y los tipos de parámetros esperados.
 
 ## Tecnologías y Versiones
 
