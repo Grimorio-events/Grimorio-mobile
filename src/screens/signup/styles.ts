@@ -1,17 +1,30 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/styles";
 
 export default StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    input: {
-      width: "80%",
-      padding: 10,
-      marginVertical: 10,
-      borderWidth: 1,
-      borderColor: "gray",
-      borderRadius: 5,
-    },
-  });
+  main: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: colors.background,
+  },
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 30,
+  },
+  buttons: {
+    marginTop: 50,
+    width: "100%",
+    flex: 1,
+  },
+  inputIOS: {
+    // estilos para iOS
+  },
+  inputAndroid: {
+    // estilos para Android
+  },
+});
