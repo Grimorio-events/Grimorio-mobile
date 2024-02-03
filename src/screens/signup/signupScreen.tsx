@@ -1,5 +1,8 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types/types";
+import React, { useState } from "react";
+import { globalStyles } from "../../styles/styles";
+import { useSignUp } from "@clerk/clerk-expo";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -9,9 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
-import PicerSelect from "../../components/picker";
-import { globalStyles } from "../../styles/styles";
 
 import styles from "./styles";
 
@@ -20,26 +20,47 @@ type SignupScreenProps = {
 };
 
 const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
-  const [singup, setSingup] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-    address: "",
-    country: "",
-    city: "",
-  });
+  const { isLoaded, signUp, setActive } = useSignUp();
 
-  const handleChange = (name: string, value: string) => {
-    setSingup((preventSingup) => ({
-      ...preventSingup,
-      [name]: value,
-    }));
+  const [loading, setLoading] = useState(false);
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [pendingVerification, setPendingVerification] = useState(false);
+  const [code, setCode] = useState("");
+
+  // start the sign up process.
+  const onSignUpPress = async () => {
+    if (!isLoaded) return;
+
+    try {
+      await signUp.create({
+        emailAddress,
+        password,
+      });
+
+      // send the email.
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
+      // change the UI to our pending section.
+      setPendingVerification(true);
+    } catch (error) {
+      console.error(JSON.stringify(error, null, 2));
+    }
   };
 
-  const handleSignup = () => {
-    console.log("🚀 ~ singup:", singup);
-    // navigation.navigate("Login");
+  // This verifies the user using email code that is delivered.
+  const onPressVerify = async () => {
+    if (!isLoaded) return;
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+
+      await setActive({ session: completeSignUp.createdSessionId });
+    } catch (error) {
+      console.error(JSON.stringify(error, null, 2));
+    }
   };
 
   return (
@@ -48,63 +69,45 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
       style={styles.main}
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.container}>
-          <TextInput
-            style={globalStyles.textInput}
-            placeholder="Name"
-            value={singup.name}
-            onChangeText={(value) => handleChange("name", value)}
-          />
-          <TextInput
-            style={globalStyles.textInput}
-            placeholder="Email"
-            value={singup.email}
-            onChangeText={(value) => handleChange("email", value)}
-          />
-          <TextInput
-            style={globalStyles.textInput}
-            placeholder="Contraseña"
-            secureTextEntry
-            value={singup.password}
-            onChangeText={(value) => handleChange("password", value)}
-          />
-          <TextInput
-            style={globalStyles.textInput}
-            placeholder="Contraseña"
-            secureTextEntry
-            value={singup.password}
-            onChangeText={(value) => handleChange("password", value)}
-          />
-          <TextInput
-            style={globalStyles.textInput}
-            placeholder="Phone Number"
-            value={singup.phone}
-            onChangeText={(value) => handleChange("phone", value)}
-          />
-          <PicerSelect singup={singup} setSingup={setSingup} />
-          <TextInput
-            style={globalStyles.textInput}
-            placeholder="City"
-            value={singup.city}
-            onChangeText={(value) => handleChange("city", value)}
-          />
-          <View style={styles.buttons}>
+        {!pendingVerification ? (
+          <View style={styles.container}>
+            <TextInput
+              style={globalStyles.textInput}
+              autoCapitalize="none"
+              value={emailAddress}
+              placeholder="Email"
+              onChangeText={(email) => setEmailAddress(email)}
+            />
+            <TextInput
+              style={globalStyles.textInput}
+              value={password}
+              placeholder="Password"
+              secureTextEntry={true}
+              onChangeText={(password) => setPassword(password)}
+            />
             <TouchableOpacity
               style={globalStyles.buttonPrimary}
-              onPress={handleSignup}
+              onPress={onSignUpPress}
             >
-              <Text style={globalStyles.textButton}>Registrarse</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={globalStyles.buttonSecundary}
-              onPress={() => navigation.navigate("Login")}
-            >
-              <Text style={globalStyles.textButtonSecundary}>
-                Ya tienes una cuenta? Iniciar sesión
-              </Text>
+              <Text style={globalStyles.textButton}>Sign up</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        ) : (
+          <View style={styles.container}>
+            <TextInput
+              style={globalStyles.textInput}
+              value={code}
+              placeholder="Code..."
+              onChangeText={(code) => setCode(code)}
+            />
+            <TouchableOpacity
+              style={globalStyles.buttonPrimary}
+              onPress={onPressVerify}
+            >
+              <Text style={globalStyles.textButton}>Verify Email</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );

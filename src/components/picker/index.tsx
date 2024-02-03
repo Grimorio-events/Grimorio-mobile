@@ -1,17 +1,8 @@
 import { Picker } from "@react-native-picker/picker";
 import { countries, getCountryData, TCountryCode } from "countries-list";
 import { globalStyles } from "../../styles/styles";
-import { TextInput, View } from "react-native";
-
-type SignupDetails = {
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-  address: string;
-  country: string;
-  city: string;
-};
+import { View } from "react-native";
+import { SignupDetails } from "../../types/types";
 
 type PicerSelectProps = {
   singup: SignupDetails;
@@ -25,7 +16,7 @@ const PicerSelect: React.FC<PicerSelectProps> = ({ singup, setSingup }) => {
   };
 
   const handleChange = (itemValue: string) => {
-    setSingup((preventSingup: any) => ({
+    setSingup((preventSingup) => ({
       ...preventSingup,
       country: itemValue,
     }));

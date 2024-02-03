@@ -4,12 +4,14 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
+    "@clerk/clerk-expo": "^0.20.2",
     "@expo/metro-runtime": "~3.1.1",
+    "@react-native-async-storage/async-storage": "1.21.0",
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
@@ -17,8 +19,11 @@
     "@types/node": "^20.11.9",
     "axios": "^1.6.7",
     "countries-list": "^3.0.6",
-    "expo": "~50.0.3",
+    "expo": "~50.0.5",
+    "expo-secure-store": "~12.8.1",
     "expo-status-bar": "~1.11.1",
+    "firebase": "^10.7.2",
+    "jwt-decode": "^4.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.2",
@@ -26,7 +31,8 @@
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
     "react-redux": "^9.1.0",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "@expo/vector-icons": "^14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
