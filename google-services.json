@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "55164603383",
+    "project_id": "grimorio-cfd09",
+    "storage_bucket": "grimorio-cfd09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55164603383:android:781436a19b008ee001bcf2",
+        "android_client_info": {
+          "package_name": "com.zaku.grimorio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbQ_CQGXqg3DGOAEr3oANU51S6e0Qh_9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
