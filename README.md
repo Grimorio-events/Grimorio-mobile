@@ -1,6 +1,6 @@
 # Grimorio
 
-Grimorio es una aplicación móvil desarrollada con React Native y TypeScript, utilizando Redux para la gestión del estado y una arquitectura backend en Node.js y Express.
+Grimorio es una aplicación móvil desarrollada con React Native y TypeScript, utilizando Zustand para la gestión del estado y una arquitectura backend en Node.js y Express.
 
 ## Estructura del Proyecto
 
@@ -77,7 +77,6 @@ Cada vez que agregues o modifiques una pantalla, asegúrate de reflejar esos cam
 
 - React Native: 0.73.2
 - TypeScript: 5.1.3
-- Redux y React Redux: 5.0.1 y 9.1.0 respectivamente
 - Node.js y Express (versiones según `package.json`)
 - Sequelize para PostgreSQL
 

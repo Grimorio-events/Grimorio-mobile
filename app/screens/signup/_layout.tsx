@@ -1,5 +1,3 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types/types";
 import React, { useState } from "react";
 import { globalStyles } from "../../styles/styles";
 import { useSignUp } from "@clerk/clerk-expo";
@@ -16,10 +14,10 @@ import {
 import styles from "./styles";
 
 type SignupScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, "Signup">;
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
+const SignupScreen: React.FC<SignupScreenProps> = ({ setIsLogin }) => {
   const { isLoaded, signUp, setActive } = useSignUp();
 
   const [loading, setLoading] = useState(false);
@@ -90,6 +88,12 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               onPress={onSignUpPress}
             >
               <Text style={globalStyles.textButton}>Sign up</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={globalStyles.buttonSecundary}
+              onPress={() => setIsLogin(true)}
+            >
+              <Text style={globalStyles.textButtonSecundary}>Login</Text>
             </TouchableOpacity>
           </View>
         ) : (

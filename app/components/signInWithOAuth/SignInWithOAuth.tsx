@@ -1,5 +1,5 @@
 import * as WebBrowser from "expo-web-browser";
-import { Button, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { useWarmUpBrowser } from "../../hooks/warmUpBrowser";
 import { useCallback } from "react";
 import { useOAuth } from "@clerk/clerk-expo";
