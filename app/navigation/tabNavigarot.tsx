@@ -38,6 +38,7 @@ const TabNavigator = () => {
         component={Profile}
         options={{
           tabBarBadge: 3,
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome
               name={!isSignedIn ? "user-circle-o" : "user-circle"}

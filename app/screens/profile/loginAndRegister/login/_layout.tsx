@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { useSignIn } from "@clerk/clerk-expo";
+import SignInWithOAuth from "../../../../components/signInWithOAuth/SignInWithOAuth";
+import { globalStyles } from "../../../../styles/styles";
+import { useNavigation } from "@react-navigation/native";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -7,12 +12,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
-import { useSignIn } from "@clerk/clerk-expo";
-import SignInWithOAuth from "../../components/signInWithOAuth/SignInWithOAuth";
 
 import styles from "./styles";
-import { globalStyles } from "../../styles/styles";
 
 type LoginSCreenProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +24,8 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
 
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigation = useNavigation();
 
   const onSignInPress = async () => {
     if (!isLoaded) return;
@@ -72,6 +75,14 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
             onPress={() => setIsLogin(false)}
           >
             <Text style={globalStyles.textButtonSecundary}>Registrarse</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={globalStyles.buttonSecundary}
+            onPress={() => navigation.navigate("ResetPass")}
+          >
+            <Text style={globalStyles.textButtonSecundary}>
+              Forget Password
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

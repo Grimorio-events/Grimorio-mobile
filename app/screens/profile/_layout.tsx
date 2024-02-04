@@ -1,18 +1,12 @@
-import { Text, View } from "react-native";
-import { LogOutButton } from "../../hooks/logoutButton";
 import { SignedIn, SignedOut } from "@clerk/clerk-expo";
-import LoginAndRegister from "./components/loginAndRegister/_layout";
+import LoginAndRegister from "./loginAndRegister/_layout";
+import UserProfile from "./profile";
 
 const Profile = () => {
   return (
     <>
       <SignedIn>
-        <View>
-          <Text>Profile</Text>
-          <View>
-            <LogOutButton />
-          </View>
-        </View>
+        <UserProfile />
       </SignedIn>
       <SignedOut>
         <LoginAndRegister />

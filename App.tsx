@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import * as SecureStore from "expo-secure-store";
-import TabNavigator from "./app/navigation/tabNavigarot";
+import AppNavigator from "./app/navigation/appNavigator";
 
 const EXPO_PUBLIC_CLERK_KEY = process.env.EXPO_PUBLIC_CLERK_KEY;
 
@@ -30,7 +30,7 @@ export default function App() {
       tokenCache={tokenCache}
     >
       <NavigationContainer>
-        <TabNavigator />
+        <AppNavigator />
       </NavigationContainer>
     </ClerkProvider>
   );
