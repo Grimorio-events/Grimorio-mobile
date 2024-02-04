@@ -5,33 +5,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 const CLERK_KEY = process.env.EXPO_PUBLIC_CLERK_KEY;
 
-// GoogleSignin.configure({
-//   webClientId: "1:55164603383:web:7c1c79dc56f53fdb01bcf2", // appId Firebase
-//   // Otras configuraciones necesarias
-// });
-
-// Función para iniciar sesión con Google
-// export const signInGoogle = async () => {
-//   try {
-//     await GoogleSignin.hasPlayServices();
-//     const userInfo = await GoogleSignin.signIn();
-//     // Procesa la información del usuario aquí
-//     return userInfo; // Devuelve la información del usuario
-//   } catch (error) {
-//     throw error; // Puedes elegir lanzar el error o manejarlo aquí
-//   }
-// };
-
-// // Función para cerrar sesión con Google
-// export const signOutGoogle = async () => {
-//   try {
-//     await GoogleSignin.signOut();
-//     // Lógica después de cerrar sesión, si es necesario
-//   } catch (error) {
-//     throw error; // Igual que en signIn, maneja o lanza el error
-//   }
-// };
-
 // Creamos usuario
 export async function registerUser(userData) {
   console.log("🚀 ~ registerUser ~ userData:", userData);
