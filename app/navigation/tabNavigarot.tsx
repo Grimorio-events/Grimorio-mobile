@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/home/_layout";
+import ExploreScren from "../screens/explore/_layout";
 import Profile from "../screens/profile/_layout";
 import { useAuth, useUser } from "@clerk/clerk-expo";
 import { useEffect } from "react";
@@ -18,18 +18,18 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Explore"
       screenOptions={{
         tabBarActiveTintColor: "tomato",
         tabBarInactiveTintColor: "gray",
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Explore"
+        component={ExploreScren}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" color={color} size={size} />
+            <AntDesign name="search1" color={color} size={size} />
           ),
         }}
       />
@@ -38,6 +38,7 @@ const TabNavigator = () => {
         component={Profile}
         options={{
           tabBarBadge: 3,
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome
               name={!isSignedIn ? "user-circle-o" : "user-circle"}

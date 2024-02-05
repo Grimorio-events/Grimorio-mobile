@@ -1,33 +1,31 @@
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../screens/login/_layout";
-import SignupScreen from "../screens/signup/_layout";
-import HomeScreen from "../screens/home/_layout";
-import { useAuth, useUser } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/clerk-expo";
+import TabNavigator from "./tabNavigarot";
+import ResetPass from "../screens/profile/loginAndRegister/reset/_layout";
+import { RootStackParamList } from "../types/types";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
   const { isLoaded, isSignedIn } = useAuth();
-  const { user } = useUser();
 
   useEffect(() => {
     if (!isLoaded) return;
-    console.log("🚀 isSignedIn appNav: ", isSignedIn);
   }, [isSignedIn]);
 
   return (
-    <Stack.Navigator initialRouteName="Home">
-      {isSignedIn ? (
-        <>
-          <Stack.Screen name="Home" component={HomeScreen} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
-        </>
-      )}
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={TabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ResetPass"
+        component={ResetPass}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

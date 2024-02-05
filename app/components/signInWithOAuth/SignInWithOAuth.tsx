@@ -21,7 +21,7 @@ const SignInWithOAuth = () => {
         await startOAuthFlow();
 
       if (createdSessionId) {
-        setActive({ session: createdSessionId });
+        setActive!({ session: createdSessionId });
       } else {
         // Use signIn or signUp for next steps such as MFA
       }
@@ -31,9 +31,14 @@ const SignInWithOAuth = () => {
   }, []);
 
   return (
-    <TouchableOpacity style={globalStyles.buttonPrimary} onPress={onPress}>
-      <AntDesign name="google" size={20} color="white" />
-      <Text style={globalStyles.textButton}>Sign in with Google</Text>
+    <TouchableOpacity style={globalStyles.buttonSocial} onPress={onPress}>
+      <AntDesign
+        name="google"
+        size={24}
+        color="black"
+        style={globalStyles.btnIcon}
+      />
+      <Text style={globalStyles.textButtonSocial}>Continue with Google</Text>
     </TouchableOpacity>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { globalStyles } from "../../styles/styles";
 import { useSignUp } from "@clerk/clerk-expo";
+import { globalStyles } from "../../../../styles/styles";
 import {
   KeyboardAvoidingView,
   Platform,

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../styles/styles";
+import { colors } from "../../../../styles/styles";
 
 export default StyleSheet.create({
   main: {
@@ -16,15 +16,14 @@ export default StyleSheet.create({
     justifyContent: "center",
     padding: 30,
   },
-  buttons: {
-    marginTop: 50,
-    width: "100%",
-    flex: 1,
+  seperatorView: {
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+    marginVertical: 30,
   },
-  inputIOS: {
-    // estilos para iOS
-  },
-  inputAndroid: {
-    // estilos para Android
+  seperator: {},
+  crateAccount: {
+    flexDirection: "row",
   },
 });
