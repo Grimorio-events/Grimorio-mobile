@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSignUp } from "@clerk/clerk-expo";
+import { globalStyles } from "../../../../styles/styles";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -11,7 +12,6 @@ import {
 } from "react-native";
 
 import styles from "./styles";
-import { globalStyles } from "../../../../styles/styles";
 
 type SignupScreenProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;

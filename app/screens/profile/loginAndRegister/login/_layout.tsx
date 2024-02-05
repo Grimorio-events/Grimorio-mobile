@@ -3,10 +3,13 @@ import { useSignIn } from "@clerk/clerk-expo";
 import SignInWithOAuth from "../../../../components/signInWithOAuth/SignInWithOAuth";
 import { globalStyles } from "../../../../styles/styles";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../../types/types";
 import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -19,13 +22,17 @@ type LoginSCreenProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+// Define el tipo de navegación para este componente
+type NavigationType = NativeStackNavigationProp<RootStackParamList, "Login">;
+
 const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
   const { signIn, setActive, isLoaded } = useSignIn();
 
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
+  const navigation = useNavigation<NavigationType>();
 
   const onSignInPress = async () => {
     if (!isLoaded) return;
@@ -50,6 +57,25 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.container}>
+          <Text>Log In</Text>
+          <SignInWithOAuth />
+          <View style={styles.seperatorView}>
+            <View
+              style={{
+                flex: 1,
+                borderBottomColor: "#000",
+                borderBottomWidth: StyleSheet.hairlineWidth,
+              }}
+            />
+            <Text style={styles.seperator}>or</Text>
+            <View
+              style={{
+                flex: 1,
+                borderBottomColor: "#000",
+                borderBottomWidth: StyleSheet.hairlineWidth,
+              }}
+            />
+          </View>
           <TextInput
             style={globalStyles.textInput}
             placeholder="Email"
@@ -63,27 +89,24 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
           />
+          <Text onPress={() => navigation.navigate("ResetPass")}>
+            Forgot password?
+          </Text>
           <TouchableOpacity
             style={globalStyles.buttonPrimary}
             onPress={onSignInPress}
           >
             <Text style={globalStyles.textButton}>Iniciar sesión</Text>
           </TouchableOpacity>
-          <SignInWithOAuth />
-          <TouchableOpacity
-            style={globalStyles.buttonSecundary}
-            onPress={() => setIsLogin(false)}
-          >
-            <Text style={globalStyles.textButtonSecundary}>Registrarse</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={globalStyles.buttonSecundary}
-            onPress={() => navigation.navigate("ResetPass")}
-          >
-            <Text style={globalStyles.textButtonSecundary}>
-              Forget Password
+          <View style={styles.crateAccount}>
+            <Text style={{ marginRight: 10 }}>Need to create an account?</Text>
+            <Text
+              style={globalStyles.textButtonSecundary}
+              onPress={() => setIsLogin(false)}
+            >
+              Sign Up
             </Text>
-          </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

@@ -3,8 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useAuth } from "@clerk/clerk-expo";
 import TabNavigator from "./tabNavigarot";
 import ResetPass from "../screens/profile/loginAndRegister/reset/_layout";
+import { RootStackParamList } from "../types/types";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
   const { isLoaded, isSignedIn } = useAuth();

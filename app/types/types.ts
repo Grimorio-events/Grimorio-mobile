@@ -9,9 +9,10 @@ export type SignupDetails = {
 };
 
 export type RootStackParamList = {
-  Home: undefined; // No se esperan parámetros para la pantalla Home
-  Login: undefined; // No se esperan parámetros para la pantalla Login
-  Signup: undefined; // No se esperan parámetros para la pantalla Signup
+  Home: undefined; // No se esperan parámetros para la pantalla
+  Login: undefined;
+  Signup: undefined;
   SignupDetails: SignupDetails;
+  ResetPass: undefined;
   // ... puedes agregar más rutas y sus parámetros aquí
 };
