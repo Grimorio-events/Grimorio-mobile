@@ -28,6 +28,7 @@ const TabNavigator = () => {
         name="Explore"
         component={ExploreScren}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="search1" color={color} size={size} />
           ),

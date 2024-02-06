@@ -31,7 +31,6 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
 
-  // const navigation = useNavigation();
   const navigation = useNavigation<NavigationType>();
 
   const onSignInPress = async () => {
