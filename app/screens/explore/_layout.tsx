@@ -13,9 +13,7 @@ const ExploreScren = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={globalStyles.container}>
         <Listing listings={items} category={category} />
-      </View>
     </SafeAreaView>
   );
 };
