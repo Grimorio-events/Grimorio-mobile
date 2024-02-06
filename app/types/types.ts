@@ -14,5 +14,7 @@ export type RootStackParamList = {
   Signup: undefined;
   SignupDetails: SignupDetails;
   ResetPass: undefined;
+  DetailsPage: { id: string };
+  Listings: undefined;
   // ... puedes agregar más rutas y sus parámetros aquí
 };

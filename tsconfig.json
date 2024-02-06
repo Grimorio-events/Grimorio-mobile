@@ -9,7 +9,10 @@
     "noEmit": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "lib": ["dom", "esnext"]
+    "lib": ["dom", "esnext"],
+    "paths": {
+      "@/*": ["./*"] // Ajusta la ruta según la estructura de directorios
+    }
   },
   "include": [
     "**/*.ts",

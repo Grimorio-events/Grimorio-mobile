@@ -4,6 +4,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import TabNavigator from "./tabNavigarot";
 import ResetPass from "../screens/profile/loginAndRegister/reset/_layout";
 import { RootStackParamList } from "../types/types";
+import DetailsPage from "../screens/listing/[id]";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,6 +21,11 @@ const AppNavigator = () => {
         name="Home"
         component={TabNavigator}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DetailsPage"
+        component={DetailsPage}
+        options={{ headerShown: false, headerTitle: "" }}
       />
       <Stack.Screen
         name="ResetPass"
