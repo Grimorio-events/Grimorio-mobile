@@ -1,21 +1,26 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ExploreScren from "../screens/explore/_layout";
 import Profile from "../screens/profile/_layout";
-import { useAuth, useUser } from "@clerk/clerk-expo";
-import { useEffect } from "react";
+import { useAuth } from "@clerk/clerk-expo";
+import { useEffect, useState } from "react";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import ExploreHeader from "../components/exploreHeader/_layout";
+import Message from "../screens/message/_layout";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  const [category, setCategory] = useState("Trending");
   const { isLoaded, isSignedIn } = useAuth();
-  const { user } = useUser();
 
   useEffect(() => {
     if (!isLoaded) return;
     console.log("🚀 isSignedIn tabNav: ", isSignedIn);
   }, [isSignedIn]);
+
+  const onDataChanged = (category: string) => {
+    setCategory(category);
+  };
 
   return (
     <Tab.Navigator
@@ -27,12 +32,23 @@ const TabNavigator = () => {
     >
       <Tab.Screen
         name="Explore"
-        component={ExploreScren}
         options={{
           headerShown: true,
-          header: () => <ExploreHeader />,
+          header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="search1" color={color} size={size} />
+          ),
+        }}
+      >
+        {() => <ExploreScren category={category} />}
+      </Tab.Screen>
+      <Tab.Screen
+        name="Message"
+        component={Message}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="message1" color={color} size={size} />
           ),
         }}
       />

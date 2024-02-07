@@ -19,5 +19,6 @@ export type RootStackParamList = {
   ListCard: undefined;
   Exploreheader: undefined;
   Explore: undefined;
+  Message: undefined;
   // ... puedes agregar más rutas y sus parámetros aquí
 };
