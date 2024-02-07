@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import { globalStyles } from "../../styles/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,10 +11,8 @@ const ExploreScren = () => {
   const items = useMemo(() => listingsData as any, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={globalStyles.container}>
-        <Listing listings={items} category={category} />
-      </View>
+    <SafeAreaView style={globalStyles.defaultContainer}>
+      <Listing listings={items} category={category} />
     </SafeAreaView>
   );
 };

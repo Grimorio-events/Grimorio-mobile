@@ -16,5 +16,6 @@ export type RootStackParamList = {
   ResetPass: undefined;
   DetailsPage: { id: string };
   Listings: undefined;
+  ListCard: undefined;
   // ... puedes agregar más rutas y sus parámetros aquí
 };

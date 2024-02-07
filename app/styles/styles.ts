@@ -1,21 +1,16 @@
 import { StyleSheet } from "react-native";
-
-export const colors = {
-  primary: "#FF6B6B",
-  secundary: "#B2A59B",
-  text: "#333333",
-  yellow: "#FFC107",
-  blue: "#0047AB",
-  white: "#F5F5F5",
-  background: "#FFF",
-  grey: "grey",
-};
+import { colors } from "./colors";
 
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: colors.background,
+  },
+
+  defaultContainer: {
+    flex: 1,
     backgroundColor: colors.background,
   },
 
