@@ -1,4 +1,3 @@
-import { Text } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
 import { ListingItem } from "@/interfaces/listing";
