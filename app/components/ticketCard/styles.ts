@@ -41,8 +41,6 @@ export const styles = StyleSheet.create({
     width: "40%",
     borderRadius: 16,
     backgroundColor: colors.background,
-    // justifyContent: "center",
-    // alignContent: "center",
   },
   imageContent: {
     alignItems: "center",

@@ -4,6 +4,7 @@ import Profile from "../screens/profile/_layout";
 import { useAuth, useUser } from "@clerk/clerk-expo";
 import { useEffect } from "react";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import ExploreHeader from "../components/exploreHeader/_layout";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +29,8 @@ const TabNavigator = () => {
         name="Explore"
         component={ExploreScren}
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: () => <ExploreHeader />,
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="search1" color={color} size={size} />
           ),

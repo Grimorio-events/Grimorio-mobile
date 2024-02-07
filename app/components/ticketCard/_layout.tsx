@@ -5,6 +5,7 @@ import { ListingItem } from "@/interfaces/listing";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/app/types/types";
+import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
 
 import { styles } from "./styles";
 
@@ -23,7 +24,11 @@ const ListCard = ({ item }: { item: ListingItem }) => {
   };
 
   return (
-    <View style={styles.card}>
+    <Animated.View
+      style={styles.card}
+      entering={FadeInRight}
+      exiting={FadeOutLeft}
+    >
       <TouchableOpacity
         onPress={() => navigation.navigate("DetailsPage", { id: item.id })}
         style={styles.ticketLeft}
@@ -74,7 +79,7 @@ const ListCard = ({ item }: { item: ListingItem }) => {
           </View>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

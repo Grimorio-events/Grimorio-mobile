@@ -17,5 +17,7 @@ export type RootStackParamList = {
   DetailsPage: { id: string };
   Listings: undefined;
   ListCard: undefined;
+  Exploreheader: undefined;
+  Explore: undefined;
   // ... puedes agregar más rutas y sus parámetros aquí
 };

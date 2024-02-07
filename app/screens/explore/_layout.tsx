@@ -1,9 +1,10 @@
 import { useUser } from "@clerk/clerk-expo";
 import { globalStyles } from "../../styles/styles";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Listing from "../../components/listings";
 import { useMemo, useState } from "react";
 import listingsData from "@/assets/data/airbnb-listings.json";
+import Listings from "../../components/listings";
 
 const ExploreScren = () => {
   const { user } = useUser();
@@ -11,9 +12,11 @@ const ExploreScren = () => {
   const items = useMemo(() => listingsData as any, []);
 
   return (
-    <SafeAreaView style={globalStyles.defaultContainer}>
-      <Listing listings={items} category={category} />
-    </SafeAreaView>
+    <View style={globalStyles.defaultContainer}>
+      {/* <SafeAreaView style={globalStyles.defaultContainer}> */}
+      <Listings listings={items} category={category} />
+      {/* </SafeAreaView> */}
+    </View>
   );
 };
 
