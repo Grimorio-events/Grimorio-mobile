@@ -14,6 +14,7 @@ const Listings = ({ listings: items, category }: props) => {
 
   useEffect(() => {
     console.log("Reload Listing: ", items.length);
+    console.log("🚀 ~ Listings ~ category:", category);
     setLoading(true);
 
     setTimeout(() => {

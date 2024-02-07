@@ -7,52 +7,68 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  Entypo,
-  FontAwesome,
-  FontAwesome5,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import { useRef, useState } from "react";
 
-const categories = [
+type IconType = "FontAwesome5" | "MaterialIcons";
+
+const categories: { name: string; icon: string; iconType: IconType }[] = [
   {
     name: "Trending",
     icon: "fire",
-    component: <FontAwesome5 name="fire" size={24} color="black" />,
+    iconType: "FontAwesome5",
   },
   {
     name: "Music",
     icon: "music",
-    component: <FontAwesome name="music" size={24} color="black" />,
+    iconType: "FontAwesome5",
   },
   {
     name: "Theater",
     icon: "theater-masks",
-    component: <FontAwesome5 name="theater-masks" size={24} color="black" />,
+    iconType: "FontAwesome5",
   },
   {
     name: "Movies",
-    icon: "movie",
-    component: <MaterialIcons name="movie" size={24} color="black" />,
+    icon: "video",
+    iconType: "FontAwesome5",
   },
   {
     name: "Virtual",
-    icon: "desktop",
-    component: <FontAwesome5 name="desktop" size={24} color="black" />,
+    icon: "laptop",
+    iconType: "FontAwesome5",
   },
   {
     name: "Video Games",
-    icon: "sports-esports",
-    component: <MaterialIcons name="sports-esports" size={24} color="black" />,
+    icon: "gamepad",
+    iconType: "FontAwesome5",
   },
   {
     name: "Sports",
-    icon: "sports-club",
-    component: <Entypo name="sports-club" size={24} color="black" />,
+    icon: "sports-soccer",
+    iconType: "MaterialIcons",
   },
 ];
 
-const ExploreHeader = () => {
+interface Props {
+  onCategoryChanged: (category: string) => void;
+}
+
+const ExploreHeader = ({ onCategoryChanged }: Props) => {
+  const itemsRef = useRef<Array<TouchableOpacity>>([]);
+  const scrollRef = useRef<ScrollView>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const selectCategorie = (index: number) => {
+    setActiveIndex(index);
+    onCategoryChanged(categories[index].name);
+  };
+
+  const iconComponents: { [key in IconType]: any } = {
+    FontAwesome5: FontAwesome5,
+    MaterialIcons: MaterialIcons,
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: colors.background }}>
       <View style={styles.containerHeader}>
@@ -65,12 +81,37 @@ const ExploreHeader = () => {
             paddingHorizontal: 16,
           }}
         >
-          {categories.map((item, index) => (
-            <TouchableOpacity key={index}>
-              {item.component}
-              <Text>{item.name}</Text>
-            </TouchableOpacity>
-          ))}
+          {categories.map((item, index) => {
+            const IconComponent = iconComponents[item.iconType];
+
+            return (
+              <TouchableOpacity
+                key={index}
+                ref={(element) => itemsRef.current[index] === element}
+                onPress={() => selectCategorie(index)}
+                style={
+                  activeIndex === index
+                    ? styles.categoriesbtnActive
+                    : styles.categoriesbtn
+                }
+              >
+                <IconComponent
+                  name={item.icon}
+                  size={24}
+                  color={activeIndex === index ? colors.primary : "black"}
+                />
+                <Text
+                  style={
+                    activeIndex === index
+                      ? styles.categoriesTextActive
+                      : styles.categoriesText
+                  }
+                >
+                  {item.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -88,6 +129,28 @@ const styles = StyleSheet.create({
       width: 1,
       height: 10,
     },
+  },
+  categoriesText: {
+    fontSize: 14,
+    color: colors.black,
+  },
+  categoriesbtn: {
+    flex: 1,
+    height: "70%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 2,
+  },
+  categoriesTextActive: {
+    fontSize: 14,
+    color: colors.primary,
+  },
+  categoriesbtnActive: {
+    flex: 1,
+    height: "70%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 2,
   },
 });
 
