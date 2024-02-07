@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
 import { ListingItem } from "@/interfaces/listing";
-import ListCard from "../listCard/_layout";
+import ListCard from "../ticketCard/_layout";
 
 interface props {
   listings: any[];

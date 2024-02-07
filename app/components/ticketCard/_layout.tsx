@@ -1,0 +1,86 @@
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { AntDesign, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
+import { colors } from "@/app/styles/colors";
+import { ListingItem } from "@/interfaces/listing";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "@/app/types/types";
+import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
+
+import { styles } from "./styles";
+
+type NavigationType = NativeStackNavigationProp<RootStackParamList, "ListCard">;
+
+const ListCard = ({ item }: { item: ListingItem }) => {
+  const navigation = useNavigation<NavigationType>();
+
+  // Función para recortar el string
+  const truncateString = (str: string, num: number) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
+  return (
+    <Animated.View
+      style={styles.card}
+      entering={FadeInRight}
+      exiting={FadeOutLeft}
+    >
+      <TouchableOpacity
+        onPress={() => navigation.navigate("DetailsPage", { id: item.id })}
+        style={styles.ticketLeft}
+      >
+        <View style={styles.ticketLeftContent}>
+          <Text style={styles.eventTitle}>{truncateString(item.name, 20)}</Text>
+          <View style={styles.eventInfoContent}>
+            <FontAwesome name="location-arrow" size={14} style={styles.icons} />
+            <Text style={styles.eventTextInfo}>{item.host_location}</Text>
+          </View>
+          <View style={styles.eventInfoContent}>
+            <AntDesign name="clockcircleo" size={14} style={styles.icons} />
+            <Text style={styles.eventTextInfo}>17:00</Text>
+          </View>
+          <View style={styles.eventInfoContentQ}>
+            <Ionicons name="people-sharp" size={14} style={styles.icons} />
+            <Text style={styles.eventTextInfo}>
+              {item.host_listings_count} quotas
+            </Text>
+          </View>
+        </View>
+        <View style={styles.dottedBorderRight} />
+        <View style={styles.event}>
+          <View style={styles.cardInfoDate}>
+            <Text style={styles.cardInfoDateDay}>12</Text>
+            <Text style={styles.ticketInfoText}>AUGUST</Text>
+          </View>
+          <View style={styles.cardInfoDate}>
+            <Ionicons name="ticket-outline" size={24} color={colors.white} />
+            <Text style={styles.ticketInfoText}>$12.000</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <View style={styles.ticketRight}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DetailsPage", { id: item.id })}
+          style={styles.imageContent}
+        >
+          <Image source={{ uri: item.medium_url }} style={styles.image} />
+        </TouchableOpacity>
+        <View style={styles.ticketInfoHost}>
+          <Image
+            source={{ uri: item.host_thumbnail_url }}
+            style={styles.hostImage}
+          />
+          <View style={styles.moreHost}>
+            <Feather name="more-horizontal" size={24} color="white" />
+          </View>
+        </View>
+      </View>
+    </Animated.View>
+  );
+};
+
+export default ListCard;
