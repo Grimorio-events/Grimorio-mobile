@@ -11,7 +11,7 @@ export const globalStyles = StyleSheet.create({
 
   defaultContainer: {
     flex: 1,
-    backgroundColor: colors.background,
+    // backgroundColor: colors.backgroundBlack,
   },
 
   btnIcon: {

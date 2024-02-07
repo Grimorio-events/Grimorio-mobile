@@ -7,7 +7,8 @@ export const colors = {
   green: "#0D9276",
   white: "#F5F5F5",
   background: "#FFF",
+  backgroundBlack: "#2C3333",
   grey: "grey",
-  black: "rgb(44, 51, 51)",
+  black: "#2C3333",
   cardBgEvent: "rgba(44, 51, 51, .9)",
 };
