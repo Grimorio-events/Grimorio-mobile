@@ -50,7 +50,7 @@ const ResetPass = () => {
           <TextInput
             style={globalStyles.textInput}
             autoCapitalize="none"
-            placeholder="cp25@nouwer.dev"
+            placeholder="name@email.com"
             value={emailAddress}
             onChangeText={setEmailAddress}
           />
