@@ -11,7 +11,7 @@ interface Props {
   category: string;
 }
 
-const TicketsBottomSheet = ({ listings, category }: Props) => {
+const ticketsBottomSearch = ({ listings, category }: Props) => {
   const [listHeight, setListHeight] = useState(0);
   const [refresh, setRefresh] = useState(0);
   const snapPoints = useMemo(() => ["4%", "100%"], []);
@@ -90,10 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TicketsBottomSheet;
-
-// Nota IMPORTANTE:
-// onLayout se utiliza para medir las dimensiones de styles.contentContainer
-// después de que se haya montado y establecer el estado listHeight basado en estas dimensiones.
-// Luego, usamos listHeight para controlar el renderizado de Listings,
-// asegurándo de que no intente renderizar antes de que el tamaño esté disponible.
+export default ticketsBottomSearch;
