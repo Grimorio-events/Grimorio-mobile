@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     height: 220,
+    backgroundColor: colors.white,
   },
   ticketLeft: {
     justifyContent: "space-between",

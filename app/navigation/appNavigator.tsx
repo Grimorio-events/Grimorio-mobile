@@ -4,7 +4,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import TabNavigator from "./tabNavigarot";
 import ResetPass from "../screens/profile/loginAndRegister/reset/_layout";
 import { RootStackParamList } from "../types/types";
-import DetailsPage from "../screens/listing/[id]";
+import DetailsPage from "../screens/ticketEvent/[id]";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

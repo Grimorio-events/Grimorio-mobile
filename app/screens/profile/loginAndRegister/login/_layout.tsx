@@ -56,7 +56,7 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.container}>
-          <Text>Log In</Text>
+          <Text style={styles.title}>Log in</Text>
           <SignInWithOAuth />
           <View style={styles.seperatorView}>
             <View
@@ -75,6 +75,7 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
               }}
             />
           </View>
+          <Text style={styles.loginInfo}>Log in using email address</Text>
           <TextInput
             style={globalStyles.textInput}
             placeholder="Email"
@@ -88,14 +89,17 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
           />
-          <Text onPress={() => navigation.navigate("ResetPass")}>
+          <Text
+            style={styles.forgotpass}
+            onPress={() => navigation.navigate("ResetPass")}
+          >
             Forgot password?
           </Text>
           <TouchableOpacity
             style={globalStyles.buttonPrimary}
             onPress={onSignInPress}
           >
-            <Text style={globalStyles.textButton}>Iniciar sesión</Text>
+            <Text style={globalStyles.textButton}>Log in</Text>
           </TouchableOpacity>
           <View style={styles.crateAccount}>
             <Text style={{ marginRight: 10 }}>Need to create an account?</Text>

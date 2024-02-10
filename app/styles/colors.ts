@@ -1,9 +1,12 @@
 export const colors = {
-  primary: "#FF6B6B",
+  primary: "#FF6C22",
+  // primary: "#FF6B6B",
   secundary: "#B2A59B",
   text: "#333333",
   yellow: "#FFC107",
   blue: "#0047AB",
+  lisghtBlue: "#86A7FC",
+  darklue: "#0C2D57",
   green: "#0D9276",
   white: "#F5F5F5",
   background: "#FFF",
@@ -11,4 +14,5 @@ export const colors = {
   grey: "grey",
   black: "#2C3333",
   cardBgEvent: "rgba(44, 51, 51, .9)",
+  alert: "#FF1700",
 };

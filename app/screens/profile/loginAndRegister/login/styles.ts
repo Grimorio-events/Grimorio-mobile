@@ -25,5 +25,20 @@ export default StyleSheet.create({
   seperator: {},
   crateAccount: {
     flexDirection: "row",
+    marginTop: 10,
+  },
+  title: {
+    fontSize: 30,
+    color: colors.black,
+    fontWeight: "900",
+    marginBottom: 30,
+  },
+  loginInfo: {
+    marginBottom: 10,
+  },
+  forgotpass: {
+    width: "100%",
+    textAlign: "right",
+    marginBottom: 15,
   },
 });
