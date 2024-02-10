@@ -43,10 +43,12 @@ const Listings = ({ listings: items, category, refresh }: props) => {
       ref={listRef}
       estimatedItemSize={100}
       keyExtractor={(item) => item.id}
+      // ItemSeparatorComponent={<Text>SEPARATOR TEST</Text>} // Componente separador (op)
+      ListEmptyComponent={<Text>Not found or Empty section</Text>}
       renderScrollComponent={ScrollView}
-      ListHeaderComponent={
-        <Text style={styles.info}>{items.length} Events</Text>
-      }
+      // ListHeaderComponent={
+      //   <Text style={styles.info}>{items.length} Events</Text>
+      // }
     />
   );
 };

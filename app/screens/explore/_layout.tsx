@@ -13,7 +13,7 @@ const ExploreScren = ({ category }: Props) => {
   const items = useMemo(() => listingsData as any, []);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, marginTop: -50 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <TicketsMaps ticketsMap={TicketsMapData} />
       <TicketsBottomSheet listings={items} category={category} />
     </GestureHandlerRootView>

@@ -7,6 +7,7 @@ import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
 import ExploreHeader from "../components/exploreHeader/_layout";
 import Message from "../screens/message/_layout";
 import { colors } from "../styles/colors";
+import { LogOutButton } from "../hooks/logoutButton";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,7 +59,8 @@ const TabNavigator = () => {
         name="Profile"
         component={Profile}
         options={{
-          headerShown: false,
+          headerShown: isSignedIn ? true : false,
+          header: () => <LogOutButton />,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome
               name={!isSignedIn ? "user-circle-o" : "user-circle"}
