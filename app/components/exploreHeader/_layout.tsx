@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import { Feather, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
 
 type IconType = "FontAwesome5" | "MaterialIcons";
@@ -71,55 +71,68 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.background }}>
-      <View style={styles.containerHeader}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            alignItems: "center",
-            gap: 20,
-            paddingHorizontal: 16,
-          }}
-        >
-          {categories.map((item, index) => {
-            const IconComponent = iconComponents[item.iconType];
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity style={styles.btnFilter}>
+          <Feather name="search" size={24} color="black" />
+          <Text style={styles.categoriesText}>Search</Text>
+        </TouchableOpacity>
+        <View style={styles.containerHeader}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              alignItems: "center",
+              gap: 20,
+              paddingLeft: 5,
+              paddingHorizontal: 16,
+            }}
+          >
+            {categories.map((item, index) => {
+              const IconComponent = iconComponents[item.iconType];
 
-            return (
-              <TouchableOpacity
-                key={index}
-                ref={(element) => itemsRef.current[index] === element}
-                onPress={() => selectCategorie(index)}
-                style={
-                  activeIndex === index
-                    ? styles.categoriesbtnActive
-                    : styles.categoriesbtn
-                }
-              >
-                <IconComponent
-                  name={item.icon}
-                  size={24}
-                  color={activeIndex === index ? colors.primary : "black"}
-                />
-                <Text
+              return (
+                <TouchableOpacity
+                  key={index}
+                  ref={(element) => itemsRef.current[index] === element}
+                  onPress={() => selectCategorie(index)}
                   style={
                     activeIndex === index
-                      ? styles.categoriesTextActive
-                      : styles.categoriesText
+                      ? styles.categoriesbtnActive
+                      : styles.categoriesbtn
                   }
                 >
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+                  <IconComponent
+                    name={item.icon}
+                    size={24}
+                    color={activeIndex === index ? colors.primary : "black"}
+                  />
+                  <Text
+                    style={
+                      activeIndex === index
+                        ? styles.categoriesTextActive
+                        : styles.categoriesText
+                    }
+                  >
+                    {item.name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  btnFilter: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+  },
   containerHeader: {
+    width: "83%",
     height: 70,
     elevation: 2,
     shadowColor: "#000",

@@ -33,6 +33,7 @@ const ListCard = ({ item }: { item: ListingItem }) => {
         onPress={() => navigation.navigate("DetailsPage", { id: item.id })}
         style={styles.ticketLeft}
       >
+        <View style={styles.dottedBorderLeft} />
         <View style={styles.ticketLeftContent}>
           <Text style={styles.eventTitle}>{truncateString(item.name, 20)}</Text>
           <View style={styles.eventInfoContent}>
@@ -50,7 +51,6 @@ const ListCard = ({ item }: { item: ListingItem }) => {
             </Text>
           </View>
         </View>
-        <View style={styles.dottedBorderRight} />
         <View style={styles.event}>
           <View style={styles.cardInfoDate}>
             <Text style={styles.cardInfoDateDay}>12</Text>
@@ -63,6 +63,7 @@ const ListCard = ({ item }: { item: ListingItem }) => {
         </View>
       </TouchableOpacity>
       <View style={styles.ticketRight}>
+        <View style={styles.dottedBorderRight} />
         <TouchableOpacity
           onPress={() => navigation.navigate("DetailsPage", { id: item.id })}
           style={styles.imageContent}
