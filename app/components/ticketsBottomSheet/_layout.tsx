@@ -14,7 +14,7 @@ interface Props {
 const TicketsBottomSheet = ({ listings, category }: Props) => {
   const [listHeight, setListHeight] = useState(0);
   const [refresh, setRefresh] = useState(0);
-  const snapPoints = useMemo(() => ["8%", "100%"], []);
+  const snapPoints = useMemo(() => ["4%", "100%"], []);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const showMap = () => {
@@ -29,8 +29,8 @@ const TicketsBottomSheet = ({ listings, category }: Props) => {
       snapPoints={snapPoints}
       style={styles.sheetContainer}
       enablePanDownToClose={false}
-      handleIndicatorStyle={{ backgroundColor: colors.grey }}
-      handleStyle={{ backgroundColor: colors.white }}
+      handleIndicatorStyle={{ backgroundColor: colors.white }}
+      handleStyle={{ backgroundColor: colors.backgorundEventList }}
     >
       <View
         style={styles.contentContainer}
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheetContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.backgorundEventList,
     borderRadius: 10,
     elevation: 4,
     shadowColor: "#000",

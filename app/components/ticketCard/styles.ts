@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     height: 220,
-    backgroundColor: colors.white,
+    backgroundColor: colors.backgorundEventList,
   },
   ticketLeft: {
     justifyContent: "space-between",
@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
     width: 1,
     backgroundColor: "transparent",
     borderRightWidth: 2,
-    borderRightColor: colors.white,
+    borderRightColor: colors.backgorundEventList,
     borderStyle: "dashed",
     marginVertical: 14,
   },
