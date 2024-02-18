@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import listingsData from "@/assets/data/airbnb-listings.json";
+import TicketsBottomSheet from "@/app/components/TicketsBottomSheet/_layout";
 import TicketsMaps from "@/app/components/ticketsMap/_layout";
 import TicketsMapData from "@/assets/data/airbnb-listings.geo.json";
-import TicketsBottomSheet from "@/app/components/ticketsBottomSheet/_layout";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 interface Props {

@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useAuth } from "@clerk/clerk-expo";
-import TabNavigator from "./tabNavigarot";
-import ResetPass from "../screens/profile/loginAndRegister/reset/_layout";
 import { RootStackParamList } from "../types/types";
+import { useAuth } from "@clerk/clerk-expo";
+import TabNavigator from "./tab.navigation";
+import ResetPass from "../components/reset/_layout";
 import DetailsPage from "../screens/ticketEvent/[id]";
+import CreateEvent from "../components/createEvent/_layout";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -31,6 +32,11 @@ const AppNavigator = () => {
         name="ResetPass"
         component={ResetPass}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreateEvent"
+        component={CreateEvent}
+        options={{ headerShown: true }}
       />
     </Stack.Navigator>
   );

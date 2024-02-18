@@ -11,7 +11,7 @@ interface Props {
   category: string;
 }
 
-const ticketsBottomSearch = ({ listings, category }: Props) => {
+const TicketsBottomSheet = ({ listings, category }: Props) => {
   const [listHeight, setListHeight] = useState(0);
   const [refresh, setRefresh] = useState(0);
   const snapPoints = useMemo(() => ["4%", "100%"], []);
@@ -29,7 +29,7 @@ const ticketsBottomSearch = ({ listings, category }: Props) => {
       snapPoints={snapPoints}
       style={styles.sheetContainer}
       enablePanDownToClose={false}
-      handleIndicatorStyle={{ backgroundColor: colors.white }}
+      handleIndicatorStyle={{ backgroundColor: colors.black }}
       handleStyle={{ backgroundColor: colors.backgorundEventList }}
     >
       <View
@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ticketsBottomSearch;
+export default TicketsBottomSheet;

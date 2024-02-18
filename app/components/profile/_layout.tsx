@@ -1,4 +1,4 @@
-import { useUser } from "@clerk/clerk-expo";
+import { useAuth, useUser } from "@clerk/clerk-expo";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../styles/styles";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import * as ImagePicker from "expo-image-picker";
 import styles from "./styles";
 
 const UserProfile = () => {
+  const { isLoaded } = useAuth();
   const { user } = useUser();
 
   const [image, setImage] = useState(null);
@@ -58,6 +59,14 @@ const UserProfile = () => {
       });
     }
   };
+
+  if (!isLoaded) {
+    return (
+      <View style={globalStyles.container}>
+        <Text>Cargando...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.main}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSignIn } from "@clerk/clerk-expo";
-import { globalStyles } from "../../../../styles/styles";
+import { globalStyles } from "../../styles/styles";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
 import styles from "./styles";

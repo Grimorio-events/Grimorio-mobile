@@ -12,17 +12,14 @@ export const styles = StyleSheet.create({
   ticketLeft: {
     justifyContent: "space-between",
     width: "60%",
-    backgroundColor: colors.background,
+    backgroundColor: colors.backgroundBlack,
     padding: 10,
     paddingRight: 0,
-    // borderRadius: 16,
   },
   ticketLeftContent: {
     flex: 1,
     paddingTop: 5,
     paddingLeft: 5,
-    // borderTopEndRadius: 12,
-    // borderTopStartRadius: 12,
   },
   cardInfoDate: {
     flexDirection: "row",
@@ -42,51 +39,52 @@ export const styles = StyleSheet.create({
   ticketRight: {
     flex: 1,
     width: "40%",
-    // borderRadius: 16,
-    backgroundColor: colors.white,
+    justifyContent: "center",
+    paddingRight: 15,
+    backgroundColor: colors.backgroundBlack,
   },
   imageContent: {
     alignItems: "center",
     justifyContent: "center",
   },
   image: {
-    width: "80%",
-    height: "80%",
-    borderRadius: 16,
+    width: "100%",
+    height: "100%",
   },
-  ticketInfoHost: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  hostImage: {
-    width: 30,
-    height: 30,
-    borderRadius: 8,
-    marginHorizontal: 2,
-  },
-  moreHost: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 30,
-    height: 30,
-    borderRadius: 8,
-    marginHorizontal: 2,
-    backgroundColor: colors.primary,
-  },
+
+  // Seccion para host y icono ->
+  // ticketInfoHost: {
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   flexDirection: "row",
+  // },
+  // hostImage: {
+  //   width: 30,
+  //   height: 30,
+  //   borderRadius: 8,
+  //   marginHorizontal: 2,
+  // },
+  // moreHost: {
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   width: 30,
+  //   height: 30,
+  //   borderRadius: 8,
+  //   marginHorizontal: 2,
+  //   backgroundColor: colors.primary,
+  // },
+
   eventTitle: {
     fontSize: 24,
     marginBottom: 7,
     fontWeight: "700",
-    color: colors.black,
+    color: colors.white,
   },
   event: {
     height: 27,
     flexDirection: "row",
     backgroundColor: colors.primary,
     justifyContent: "center",
-    // borderBottomEndRadius: 12,
-    // borderBottomStartRadius: 12,
   },
   eventInfoContent: {
     alignItems: "center",
@@ -99,12 +97,12 @@ export const styles = StyleSheet.create({
   eventTextInfo: {
     fontSize: 14,
     fontWeight: "500",
-    color: colors.black,
+    color: colors.white,
     marginLeft: 5,
   },
   icons: {
     width: 16,
-    color: colors.black,
+    color: colors.white,
   },
   dottedBorderRight: {
     position: "absolute",

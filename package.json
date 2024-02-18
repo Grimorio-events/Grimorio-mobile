@@ -23,6 +23,7 @@
     "axios": "^1.6.7",
     "countries-list": "^3.0.6",
     "expo": "~50.0.5",
+    "expo-image-picker": "~14.7.1",
     "expo-location": "~16.5.3",
     "expo-router": "~3.4.6",
     "expo-secure-store": "~12.8.1",
@@ -33,14 +34,14 @@
     "react-devtools": "^5.0.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.2",
+    "react-native-gesture-handler": "~2.14.0",
     "react-native-map-clustering": "^3.4.2",
     "react-native-maps": "1.10.0",
     "react-native-reanimated": "~3.6.2",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
-    "react-native-gesture-handler": "~2.14.0",
-    "expo-image-picker": "~14.7.1"
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

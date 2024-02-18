@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSignIn } from "@clerk/clerk-expo";
-import SignInWithOAuth from "../../../../components/signInWithOAuth/SignInWithOAuth";
-import { globalStyles } from "../../../../styles/styles";
+import SignInWithOAuth from "../signInWithOAuth/SignInWithOAuth";
+import { globalStyles } from "../../styles/styles";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../../types/types";
+import { RootStackParamList } from "../../types/types";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -41,6 +41,7 @@ const LoginScreen: React.FC<LoginSCreenProps> = ({ setIsLogin }) => {
         identifier: emailAddress,
         password,
       });
+      console.log("🚀 ~ onSignInPress ~ completeSignIn:", completeSignIn);
       // This is an important step,
       // This indicates the user is signed in
       await setActive({ session: completeSignIn.createdSessionId });
