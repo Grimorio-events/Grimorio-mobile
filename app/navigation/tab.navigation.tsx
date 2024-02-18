@@ -8,12 +8,13 @@ import ExploreHeader from "../components/exploreHeader/_layout";
 import Message from "../screens/message/_layout";
 import { colors } from "../styles/colors";
 import { LogOutButton } from "../hooks/logoutButton";
+import Create from "../screens/create/_layout";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   const [category, setCategory] = useState("Trending");
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn, getToken } = useAuth();
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -30,6 +31,16 @@ const TabNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: "gray",
+        tabBarStyle: { height: 60 },
+        tabBarLabelStyle: {
+          // Estilos aplicados a la etiqueta del texto de la tabBar
+          fontSize: 12,
+          marginBottom: 5,
+        },
+        tabBarIconStyle: {
+          // Estilo para el ícono
+          marginTop: 5,
+        },
       }}
     >
       <Tab.Screen
@@ -44,6 +55,16 @@ const TabNavigator = () => {
       >
         {() => <ExploreScren category={category} />}
       </Tab.Screen>
+      <Tab.Screen
+        name="Create"
+        component={Create}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="pencil-square-o" color={color} size={size} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Message"
         component={Message}

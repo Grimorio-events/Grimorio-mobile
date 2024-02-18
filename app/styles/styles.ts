@@ -18,6 +18,11 @@ export const globalStyles = StyleSheet.create({
     left: 16,
   },
 
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+
   textInput: {
     width: "100%",
     height: 50,

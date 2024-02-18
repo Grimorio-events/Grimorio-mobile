@@ -70,7 +70,7 @@ const ListCard = ({ item }: { item: ListingItem }) => {
         >
           <Image source={{ uri: item.medium_url }} style={styles.image} />
         </TouchableOpacity>
-        <View style={styles.ticketInfoHost}>
+        {/* <View style={styles.ticketInfoHost}>
           <Image
             source={{ uri: item.host_thumbnail_url }}
             style={styles.hostImage}
@@ -78,7 +78,7 @@ const ListCard = ({ item }: { item: ListingItem }) => {
           <View style={styles.moreHost}>
             <Feather name="more-horizontal" size={24} color="white" />
           </View>
-        </View>
+        </View> */}
       </View>
     </Animated.View>
   );

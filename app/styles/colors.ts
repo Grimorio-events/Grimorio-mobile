@@ -11,7 +11,7 @@ export const colors = {
   white: "#F5F5F5",
   background: "#FFF",
   backgroundBlack: "#2C3333",
-  backgorundEventList: "#FF6B6B",
+  backgorundEventList: "#EEEEEE",
   grey: "grey",
   black: "#2C3333",
   cardBgEvent: "rgba(44, 51, 51, .9)",

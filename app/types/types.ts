@@ -10,6 +10,8 @@ export type SignupDetails = {
 
 export type RootStackParamList = {
   Home: undefined; // No se esperan parámetros para la pantalla
+  Profile: undefined;
+  Create: undefined;
   Login: undefined;
   Signup: undefined;
   SignupDetails: SignupDetails;
@@ -21,5 +23,7 @@ export type RootStackParamList = {
   Explore: undefined;
   Message: undefined;
   TicketsMaps: undefined;
+  Requiredlogin: undefined;
+  CreateEvent: undefined;
   // ... puedes agregar más rutas y sus parámetros aquí
 };
