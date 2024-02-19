@@ -36,7 +36,7 @@ const AppNavigator = () => {
       <Stack.Screen
         name="CreateEvent"
         component={CreateEvent}
-        options={{ headerShown: true }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

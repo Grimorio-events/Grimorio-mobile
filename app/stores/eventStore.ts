@@ -8,8 +8,16 @@ interface EventStoreState {
 
 const useEventStore = create<EventStoreState>((set) => ({
   stateEvent: 1,
-  increment: () => set((state) => ({ stateEvent: state.stateEvent + 1 })),
-  decrement: () => set((state) => ({ stateEvent: state.stateEvent - 1 })),
+  increment: () =>
+    set((state) => ({
+      stateEvent:
+        state.stateEvent < 9 ? state.stateEvent + 1 : state.stateEvent,
+    })),
+  decrement: () =>
+    set((state) => ({
+      stateEvent:
+        state.stateEvent > 1 ? state.stateEvent - 1 : state.stateEvent,
+    })),
 }));
 
 export default useEventStore;
