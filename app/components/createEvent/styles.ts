@@ -8,13 +8,24 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: colors.background,
   },
-  navCreate: {
+  navHeader: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 30,
+    backgroundColor: colors.background,
+  },
+  navCreate: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    height: 80,
+    paddingHorizontal: 30,
+    backgroundColor: colors.background,
   },
   navBack: {
     flexDirection: "row",
@@ -35,6 +46,15 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.black,
     backgroundColor: colors.black,
+    borderRadius: 5,
+  },
+  navNextDisable: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: colors.grey,
+    backgroundColor: colors.grey,
     borderRadius: 5,
   },
   navNextText: {

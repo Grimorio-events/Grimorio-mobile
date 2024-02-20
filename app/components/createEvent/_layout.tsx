@@ -13,6 +13,7 @@ import ContentEvent from "./steps/step.05";
 import EventImportantInfo from "./steps/step.06";
 import EventDocuments from "./steps/step.07";
 import FinishAndPublish from "./steps/step.08";
+import { EventData } from "@/app/interface/event.interface";
 
 import styles from "./styles";
 
@@ -20,17 +21,72 @@ const CreateEvent = () => {
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
   const { stateEvent, increment, decrement } = useEventStore();
+  const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
+
+  const [formEvent, setFormEvent] = useState<EventData>({
+    address: "", // LocationEvent
+    latitude: 0.0, // LocationEvent
+    longitude: 0.0, // LocationEvent
+    totalCapacity: 0, // DateEvent
+    eventType: "", // EventType
+    ticketPrice: 0, // DateEvent
+    ownerId: user?.id || "", // User information
+    description: "", // AboutEvent
+    images: [], // ContentEvent
+    eventDate: new Date(), // DateEvent
+    eventEndDate: new Date(), // DateEvent
+    categories: [], // EventType (Opcional)
+    ticketPurchaseDeadline: new Date(), // DateEvent (Opcional)
+    refundPolicy: "", // Automatic (Opcional)
+    socialLinks: [], // (Opcional)
+    rating: 0, // Automatic
+    availableTickets: 0, // DateEvent (Opcional)
+    ageRestriction: "", // EventImportantInfo (Opcional)
+    organizerContact: "", // User information (Opcional)
+    accessibilityInfo: "", // EventImportantInfo (Opcional)
+    documents: [], // EventDocuments (Opcional)
+  });
+
+  const updateFormEvent = (field: string, value: any) => {
+    setFormEvent((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+    // console.log("🚀 ~ CreateEvent ~ formEvent:", formEvent);
+  };
+
+  const updateStepValidity = (isValid: boolean) => {
+    setIsCurrentStepValid(isValid);
+  };
 
   const getStepContent = (step: number) => {
     switch (step) {
       case 1:
-        return <InfoCreateEvent />;
+        return <InfoCreateEvent updateStepValidity={updateStepValidity} />;
       case 2:
-        return <EventType />;
+        return (
+          <EventType
+            updateFormEvent={updateFormEvent}
+            formEvent={formEvent}
+            updateStepValidity={updateStepValidity}
+          />
+        );
       case 3:
-        return <AboutEvent />;
+        return (
+          <AboutEvent
+            updateFormEvent={updateFormEvent}
+            formEvent={formEvent}
+            updateStepValidity={updateStepValidity}
+          />
+        );
       case 4:
-        return <LocationEvent />;
+        return (
+          <LocationEvent
+            updateFormEvent={updateFormEvent}
+            formEvent={formEvent}
+            updateStepValidity={updateStepValidity}
+          />
+        );
       case 5:
         return <DateEvent />;
       case 6:
@@ -42,7 +98,7 @@ const CreateEvent = () => {
       case 9:
         return <FinishAndPublish />;
       default:
-        // Código que se ejecuta si `valor` no coincide con los casos anteriores
+        // Código que se ejecuta si `step` no coincide con los casos anteriores
         return <Text>Unknown Step</Text>;
     }
   };
@@ -56,47 +112,24 @@ const CreateEvent = () => {
     }, 200);
   }, [stateEvent]);
 
-  const [formEvent, setFormEvent] = useState({
-    address: "", // LocationEvent
-    latitude: 0.0, // LocationEvent
-    longitude: 0.0, // LocationEvent
-    totalCapacity: 0, // DateEvent
-    eventType: "", // EventType
-    ticketPrice: 0, // DateEvent
-    ownerId: user?.id || "", // User information
-    description: "", // AboutEvent
-    images: [], // ContentEvent
-    eventDate: Date, // DateEvent
-    eventEndDate: Date, // DateEvent
-    categories: [], // EventType
-    ticketPurchaseDeadline: Date, // DateEvent
-    refundPolicy: "", // Automatic
-    socialLinks: [], //
-    rating: 0, // Automatic
-    availableTickets: 0, // DateEvent
-    ageRestriction: "", // EventImportantInfo
-    organizerContact: "", // User information
-    accessibilityInfo: "", // EventImportantInfo
-    documents: [], // EventDocuments
-  });
-  // console.log("🚀 ~ CreateEvent ~ formEvent:", formEvent);
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.navCreate}>
+      <View style={styles.navHeader}>
         <TouchableOpacity>
           <Text>Exit</Text>
         </TouchableOpacity>
       </View>
-      {/* <Animated.View entering={FadeInRight} exiting={FadeOutLeft}> */}
       {getStepContent(stateEvent)}
-      {/* </Animated.View> */}
       <View style={styles.navCreate}>
         <TouchableOpacity style={styles.navBack} onPress={decrement}>
           <Ionicons name="caret-back" size={24} color="black" />
           <Text style={styles.navBackText}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navNext} onPress={increment}>
+        <TouchableOpacity
+          style={isCurrentStepValid ? styles.navNext : styles.navNextDisable}
+          onPress={increment}
+          disabled={!isCurrentStepValid}
+        >
           <Text style={styles.navNextText}>Next</Text>
           <Ionicons name="caret-forward" size={24} color="white" />
         </TouchableOpacity>
