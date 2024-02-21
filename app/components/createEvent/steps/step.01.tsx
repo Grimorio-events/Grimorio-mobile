@@ -9,7 +9,7 @@ import {
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/app/styles/colors";
-import { EventData } from "@/app/interface/event.interface";
+import useFormEventStore from "@/app/stores/formEventStore";
 
 type IconType = "FontAwesome5" | "MaterialIcons";
 
@@ -47,19 +47,12 @@ const categories: { name: string; icon: string; iconType: IconType }[] = [
 ];
 
 interface StepComponentProps {
-  updateFormEvent: (field: string, value: any) => void;
-  formEvent: EventData;
   updateStepValidity: (isValid: boolean) => void;
 }
 
-const EventType: React.FC<StepComponentProps> = ({
-  updateFormEvent,
-  formEvent,
-  updateStepValidity,
-}) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    formEvent?.eventType || null
-  );
+const EventType: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
+  const { stateFormEvent, updateFormEvent } = useFormEventStore();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const iconComponents: { [key in IconType]: any } = {
     FontAwesome5: FontAwesome5,
@@ -74,14 +67,14 @@ const EventType: React.FC<StepComponentProps> = ({
   };
 
   const isValidStep = () => {
-    const categoriesLength = formEvent.categories?.length || 0;
-    return formEvent.eventType !== "" && categoriesLength > 0;
+    const categoriesLength = stateFormEvent.categories?.length || 0;
+    return stateFormEvent.eventType !== "" && categoriesLength > 0;
   };
 
   useEffect(() => {
     const isValid = isValidStep(); // Llama a tu función de validación local
     updateStepValidity(isValid);
-  }, [formEvent.eventType, formEvent.categories]); // Dependencias basadas en tu lógica de validación
+  }, [stateFormEvent.eventType, stateFormEvent.categories]); // Dependencias basadas en tu lógica de validación
 
   return (
     <Animated.View

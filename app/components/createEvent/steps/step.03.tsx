@@ -1,14 +1,24 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { colors } from "@/app/styles/colors";
-import { EventData } from "@/app/interface/event.interface";
-import axios from "axios";
+import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "@/app/types/types";
+import useFormEventStore from "@/app/stores/formEventStore";
 
 import * as Location from "expo-location";
 
 interface LocationState {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
+
+interface LocationUpdate {
   latitude: number;
   longitude: number;
 }
@@ -23,24 +33,34 @@ interface MapPressEvent {
 }
 
 interface StepComponentProps {
-  updateFormEvent: (field: string, value: any) => void;
-  formEvent: EventData;
   updateStepValidity: (isValid: boolean) => void;
 }
 
+type NavigationType = NativeStackNavigationProp<
+  RootStackParamList,
+  "LocationEvent"
+>;
+
 const LocationEvent: React.FC<StepComponentProps> = ({
-  formEvent,
   updateStepValidity,
-  updateFormEvent,
 }) => {
-  const [location, setLocation] = useState<LocationState | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [region, setRegion] = useState({
-    latitude: formEvent.latitude || 37.33,
-    longitude: formEvent.longitude || -122,
+  const { stateFormEvent, updateFormEvent, stateAddress } = useFormEventStore();
+  const [region, setRegion] = useState<LocationState | LocationUpdate>({
+    latitude: stateFormEvent.latitude || 37.33,
+    longitude: stateFormEvent.longitude || -122,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
+
+  const INITIAL_REGION = {
+    latitude: stateFormEvent.latitude || 37.33,
+    longitude: stateFormEvent.longitude || -122,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+
+  const navigation = useNavigation<NavigationType>();
+  const mapRef = useRef<any>(null);
 
   const requestLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -48,6 +68,7 @@ const LocationEvent: React.FC<StepComponentProps> = ({
       alert("Permission to access location was denied");
       return;
     }
+    mapRef.current?.animateToRegion(region);
   };
 
   useEffect(() => {
@@ -59,46 +80,23 @@ const LocationEvent: React.FC<StepComponentProps> = ({
       latitude: event.nativeEvent.coordinate.latitude,
       longitude: event.nativeEvent.coordinate.longitude,
     };
-    setLocation(newLocation);
+    setRegion(newLocation);
 
     updateFormEvent("latitude", event.nativeEvent.coordinate.latitude);
     updateFormEvent("longitude", event.nativeEvent.coordinate.longitude);
   };
 
-  // Servicio de Google map con Costo
-  // const searchLocation = async (searchTerm) => {
-  //   const apiKey = "AIzaSyAUggwmx7i_gDxU-mC411Se1QNcep7y6ho"; // Costo adicional (Importante!)
-  //   const response = await axios.get(
-  //     `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-  //       searchTerm
-  //     )}&key=${apiKey}`
-  //   );
-
-  //   if (response.data.status === "OK") {
-  //     const { lat, lng } = response.data.results[0].geometry.location;
-
-  //     // Actualiza el estado o la referencia del mapa para centrarlo en estas coordenadas
-  //     console.log(lat, lng);
-  //     setRegion({
-  //       ...region,
-  //       latitude: lat,
-  //       longitude: lng,
-  //     });
-  //   } else {
-  //     console.error("No se encontraron resultados.");
-  //   }
-  // };
-
   const isValidStep = () => {
-    const latitude = formEvent.latitude !== 0.0;
-    const longitude = formEvent.longitude !== 0.0;
-    return latitude && longitude;
+    const latitude = stateFormEvent.latitude !== 0.0;
+    const longitude = stateFormEvent.longitude !== 0.0;
+    const addressComplete = stateAddress;
+    return latitude && longitude && addressComplete;
   };
 
   useEffect(() => {
     const isValid = isValidStep();
     updateStepValidity(isValid);
-  }, [formEvent.latitude, formEvent.longitude]);
+  }, [stateFormEvent.latitude, stateFormEvent.longitude, stateAddress]);
 
   return (
     <Animated.View
@@ -113,20 +111,20 @@ const LocationEvent: React.FC<StepComponentProps> = ({
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton
-          initialRegion={region}
-          region={region}
+          initialRegion={INITIAL_REGION}
+          ref={mapRef}
           onPress={handleMapPress}
         >
-          {location && <Marker coordinate={location} />}
+          <Marker coordinate={region} />
         </MapView>
-        <View style={styles.absoluteSearch}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Buscar ubicación..."
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-            // onSubmitEditing={() => searchLocation(searchTerm)}
-          />
+        <View style={styles.absoluteModal}>
+          <TouchableOpacity
+            style={styles.addressModal}
+            onPress={() => navigation.navigate("ModalLocation")}
+          >
+            <Entypo name="location-pin" size={24} color="black" />
+            <Text>Set your address</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Animated.View>
@@ -140,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     backgroundColor: colors.background,
-    paddingTop: 40,
+    paddingTop: 30,
   },
   title: {
     fontSize: 24,
@@ -153,14 +151,17 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     paddingLeft: 40,
   },
-  absoluteSearch: {
+  absoluteModal: {
     position: "absolute",
     bottom: 30,
     width: "100%",
     alignItems: "center",
   },
-  searchInput: {
+  addressModal: {
     width: "80%",
+    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.background,
     borderRadius: 15,
     padding: 10,

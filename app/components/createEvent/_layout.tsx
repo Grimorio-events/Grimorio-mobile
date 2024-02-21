@@ -13,47 +13,16 @@ import ContentEvent from "./steps/step.05";
 import EventImportantInfo from "./steps/step.06";
 import EventDocuments from "./steps/step.07";
 import FinishAndPublish from "./steps/step.08";
-import { EventData } from "@/app/interface/event.interface";
 
 import styles from "./styles";
+import useFormEventStore from "@/app/stores/formEventStore";
 
 const CreateEvent = () => {
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
   const { stateEvent, increment, decrement } = useEventStore();
   const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
-
-  const [formEvent, setFormEvent] = useState<EventData>({
-    address: "", // LocationEvent
-    latitude: 0.0, // LocationEvent
-    longitude: 0.0, // LocationEvent
-    totalCapacity: 0, // DateEvent
-    eventType: "", // EventType
-    ticketPrice: 0, // DateEvent
-    ownerId: user?.id || "", // User information
-    description: "", // AboutEvent
-    images: [], // ContentEvent
-    eventDate: new Date(), // DateEvent
-    eventEndDate: new Date(), // DateEvent
-    categories: [], // EventType (Opcional)
-    ticketPurchaseDeadline: new Date(), // DateEvent (Opcional)
-    refundPolicy: "", // Automatic (Opcional)
-    socialLinks: [], // (Opcional)
-    rating: 0, // Automatic
-    availableTickets: 0, // DateEvent (Opcional)
-    ageRestriction: "", // EventImportantInfo (Opcional)
-    organizerContact: "", // User information (Opcional)
-    accessibilityInfo: "", // EventImportantInfo (Opcional)
-    documents: [], // EventDocuments (Opcional)
-  });
-
-  const updateFormEvent = (field: string, value: any) => {
-    setFormEvent((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-    // console.log("🚀 ~ CreateEvent ~ formEvent:", formEvent);
-  };
+  const { updateFormEvent } = useFormEventStore();
 
   const updateStepValidity = (isValid: boolean) => {
     setIsCurrentStepValid(isValid);
@@ -64,29 +33,11 @@ const CreateEvent = () => {
       case 1:
         return <InfoCreateEvent updateStepValidity={updateStepValidity} />;
       case 2:
-        return (
-          <EventType
-            updateFormEvent={updateFormEvent}
-            formEvent={formEvent}
-            updateStepValidity={updateStepValidity}
-          />
-        );
+        return <EventType updateStepValidity={updateStepValidity} />;
       case 3:
-        return (
-          <AboutEvent
-            updateFormEvent={updateFormEvent}
-            formEvent={formEvent}
-            updateStepValidity={updateStepValidity}
-          />
-        );
+        return <AboutEvent updateStepValidity={updateStepValidity} />;
       case 4:
-        return (
-          <LocationEvent
-            updateFormEvent={updateFormEvent}
-            formEvent={formEvent}
-            updateStepValidity={updateStepValidity}
-          />
-        );
+        return <LocationEvent updateStepValidity={updateStepValidity} />;
       case 5:
         return <DateEvent />;
       case 6:
@@ -106,6 +57,8 @@ const CreateEvent = () => {
   useEffect(() => {
     console.log("🚀 ~ CreateEvent ~ stateEvent:", stateEvent);
     setLoading(true);
+
+    updateFormEvent("ownerId", user?.id);
 
     setTimeout(() => {
       setLoading(false);

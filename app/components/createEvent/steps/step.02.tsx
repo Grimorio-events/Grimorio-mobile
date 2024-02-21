@@ -2,21 +2,16 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
 import React, { useEffect, useState } from "react";
 import { colors } from "@/app/styles/colors";
-import { EventData } from "@/app/interface/event.interface";
+import useFormEventStore from "@/app/stores/formEventStore";
 
 interface StepComponentProps {
-  updateFormEvent: (field: string, value: any) => void;
-  formEvent: EventData;
   updateStepValidity: (isValid: boolean) => void;
 }
 
-const AboutEvent: React.FC<StepComponentProps> = ({
-  updateFormEvent,
-  updateStepValidity,
-  formEvent,
-}) => {
+const AboutEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
+  const { stateFormEvent, updateFormEvent } = useFormEventStore();
   const [description, setDescription] = useState<string>(
-    formEvent.description || ""
+    stateFormEvent.description || ""
   );
 
   const handleChange = (text: string) => {
@@ -36,7 +31,7 @@ const AboutEvent: React.FC<StepComponentProps> = ({
   useEffect(() => {
     const isValid = isValidStep();
     updateStepValidity(isValid);
-  }, [formEvent.description]);
+  }, [stateFormEvent.description]);
 
   return (
     <Animated.View
