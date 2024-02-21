@@ -42,7 +42,8 @@
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
     "zustand": "^4.5.1",
-    "expo-image": "~1.10.6"
+    "expo-image": "~1.10.6",
+    "@react-native-community/datetimepicker": "7.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

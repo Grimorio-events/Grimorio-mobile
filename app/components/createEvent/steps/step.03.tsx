@@ -8,8 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/app/types/types";
 import useFormEventStore from "@/app/stores/formEventStore";
-
-import * as Location from "expo-location";
+import { requestLocationPermission } from "@/app/utils/requestLocation";
 
 interface LocationState {
   latitude: number;
@@ -62,17 +61,9 @@ const LocationEvent: React.FC<StepComponentProps> = ({
   const navigation = useNavigation<NavigationType>();
   const mapRef = useRef<any>(null);
 
-  const requestLocationPermission = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      alert("Permission to access location was denied");
-      return;
-    }
-    mapRef.current?.animateToRegion(region);
-  };
-
   useEffect(() => {
     requestLocationPermission();
+    mapRef.current?.animateToRegion(region);
   }, []);
 
   const handleMapPress = (event: MapPressEvent) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Keyboard } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import useEventStore from "@/app/stores/eventStore";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,15 +13,17 @@ import ContentEvent from "./steps/step.05";
 import EventImportantInfo from "./steps/step.06";
 import EventDocuments from "./steps/step.07";
 import FinishAndPublish from "./steps/step.08";
+import useFormEventStore from "@/app/stores/formEventStore";
 
 import styles from "./styles";
-import useFormEventStore from "@/app/stores/formEventStore";
 
 const CreateEvent = () => {
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
   const { stateEvent, increment, decrement } = useEventStore();
   const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
   const { updateFormEvent } = useFormEventStore();
 
   const updateStepValidity = (isValid: boolean) => {
@@ -39,7 +41,7 @@ const CreateEvent = () => {
       case 4:
         return <LocationEvent updateStepValidity={updateStepValidity} />;
       case 5:
-        return <DateEvent />;
+        return <DateEvent updateStepValidity={updateStepValidity} />;
       case 6:
         return <ContentEvent />;
       case 7:
@@ -65,6 +67,27 @@ const CreateEvent = () => {
     }, 200);
   }, [stateEvent]);
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true); // Establece el estado a true cuando el teclado se muestra
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false); // Establece el estado a false cuando el teclado se oculta
+      }
+    );
+
+    return () => {
+      // Limpieza de los listeners
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navHeader}>
@@ -73,20 +96,22 @@ const CreateEvent = () => {
         </TouchableOpacity>
       </View>
       {getStepContent(stateEvent)}
-      <View style={styles.navCreate}>
-        <TouchableOpacity style={styles.navBack} onPress={decrement}>
-          <Ionicons name="caret-back" size={24} color="black" />
-          <Text style={styles.navBackText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={isCurrentStepValid ? styles.navNext : styles.navNextDisable}
-          onPress={increment}
-          disabled={!isCurrentStepValid}
-        >
-          <Text style={styles.navNextText}>Next</Text>
-          <Ionicons name="caret-forward" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+      {!keyboardVisible && (
+        <View style={styles.navCreate}>
+          <TouchableOpacity style={styles.navBack} onPress={decrement}>
+            <Ionicons name="caret-back" size={24} color="black" />
+            <Text style={styles.navBackText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={isCurrentStepValid ? styles.navNext : styles.navNextDisable}
+            onPress={increment}
+            disabled={!isCurrentStepValid}
+          >
+            <Text style={styles.navNextText}>Next</Text>
+            <Ionicons name="caret-forward" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
