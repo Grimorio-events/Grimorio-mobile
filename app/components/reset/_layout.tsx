@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import { useSignIn } from "@clerk/clerk-expo";
 import { globalStyles } from "../../styles/styles";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "@/app/types/types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import styles from "./styles";
+
+type NavigationType = NativeStackNavigationProp<
+  RootStackParamList,
+  "ResetPass"
+>;
 
 const ResetPass = () => {
   const [emailAddress, setEmailAddress] = useState("");
@@ -11,6 +19,8 @@ const ResetPass = () => {
   const [code, setCode] = useState("");
   const [successfulCreation, setSuccessfulCreation] = useState(false);
   const { signIn, setActive } = useSignIn();
+
+  const navigation = useNavigation<NavigationType>();
 
   // Request a passowrd reset code by email
   const onRequestReset = async () => {
@@ -33,6 +43,7 @@ const ResetPass = () => {
         code,
         password,
       });
+      navigation.navigate("Profile");
       alert("Password reset successfully");
 
       // Set the user session active, which will log in the user automatically

@@ -25,5 +25,7 @@ export type RootStackParamList = {
   TicketsMaps: undefined;
   Requiredlogin: undefined;
   CreateEvent: undefined;
+  LocationEvent: undefined;
+  ModalLocation: undefined;
   // ... puedes agregar más rutas y sus parámetros aquí
 };

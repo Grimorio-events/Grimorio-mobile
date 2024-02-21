@@ -6,6 +6,7 @@ import TabNavigator from "./tab.navigation";
 import ResetPass from "../components/reset/_layout";
 import DetailsPage from "../screens/ticketEvent/[id]";
 import CreateEvent from "../components/createEvent/_layout";
+import ModalLocation from "../components/createEvent/steps/step03.modal";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -36,7 +37,17 @@ const AppNavigator = () => {
       <Stack.Screen
         name="CreateEvent"
         component={CreateEvent}
-        options={{ headerShown: true }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ModalLocation"
+        component={ModalLocation}
+        options={{
+          headerTitle: "Confirma la Localización",
+          presentation: "modal",
+          animation: "fade",
+          headerTransparent: true,
+        }}
       />
     </Stack.Navigator>
   );
