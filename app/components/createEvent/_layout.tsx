@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Keyboard } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import useEventStore from "@/app/stores/eventStore";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import InfoCreateEvent from "./steps/step.00";
 import EventType from "./steps/step.01";
 import AboutEvent from "./steps/step.02";
@@ -45,9 +45,9 @@ const CreateEvent = () => {
       case 6:
         return <ContentEvent updateStepValidity={updateStepValidity} />;
       case 7:
-        return <EventImportantInfo />;
+        return <EventImportantInfo updateStepValidity={updateStepValidity} />;
       case 8:
-        return <EventDocuments />;
+        return <EventDocuments updateStepValidity={updateStepValidity} />;
       case 9:
         return <FinishAndPublish />;
       default:
@@ -102,14 +102,28 @@ const CreateEvent = () => {
             <Ionicons name="caret-back" size={24} color="black" />
             <Text style={styles.navBackText}>Back</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={isCurrentStepValid ? styles.navNext : styles.navNextDisable}
-            onPress={increment}
-            disabled={!isCurrentStepValid}
-          >
-            <Text style={styles.navNextText}>Next</Text>
-            <Ionicons name="caret-forward" size={24} color="white" />
-          </TouchableOpacity>
+          {stateEvent !== 9 ? (
+            <TouchableOpacity
+              style={
+                isCurrentStepValid ? styles.navNext : styles.navNextDisable
+              }
+              onPress={increment}
+              disabled={!isCurrentStepValid}
+            >
+              <Text style={styles.navNextText}>Next</Text>
+              <Ionicons name="caret-forward" size={24} color="white" />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={
+                isCurrentStepValid ? styles.navNext : styles.navNextDisable
+              }
+              // onPress={increment}
+              disabled={!isCurrentStepValid}
+            >
+              <Text style={styles.navNextText}>Finalizar y Publicar</Text>
+            </TouchableOpacity>
+          )}
         </View>
       )}
     </SafeAreaView>

@@ -34,6 +34,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.black,
     borderRadius: 5,
+    height: 47,
   },
   navBackText: {
     color: colors.black,
@@ -47,6 +48,7 @@ export default StyleSheet.create({
     borderColor: colors.black,
     backgroundColor: colors.black,
     borderRadius: 5,
+    height: 47,
   },
   navNextDisable: {
     flexDirection: "row",
@@ -56,6 +58,7 @@ export default StyleSheet.create({
     borderColor: colors.grey,
     backgroundColor: colors.grey,
     borderRadius: 5,
+    height: 47,
   },
   navNextText: {
     color: colors.white,

@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -30,8 +30,6 @@ const ContentEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
       quality: 1,
     });
 
-    console.log("🚀 ~ pickImage ~ result:", result);
-
     if (!result.canceled) {
       const newImg = result.assets[0].uri;
       setImages((currentImage: string[]) => [...currentImage, newImg]);
@@ -50,7 +48,7 @@ const ContentEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
 
     const isValid = isValidStep();
     updateStepValidity(isValid);
-  }, [images]);
+  }, [images, stateFormEvent.images]);
 
   const removeImage = (indexToRemove: number) => {
     setImages(images.filter((_, index) => index !== indexToRemove));
@@ -62,9 +60,13 @@ const ContentEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
       entering={FadeInRight}
       exiting={FadeOutLeft}
     >
-      <Text style={styles.title}>Content Event</Text>
+      <Text style={styles.title}>Contenido </Text>
+      <Text style={styles.contentText}>
+        Contar con una imagen de portada o una selección de imágenes contribuye
+        a despertar un mayor interés.
+      </Text>
       <View style={styles.contentTitleBtn}>
-        <Text style={styles.subTitle}>Agrega imagenes</Text>
+        <Text style={styles.subTitle}>Imágenes</Text>
         <TouchableOpacity style={styles.btnPickTitle} onPress={pickImage}>
           <Text>Agregar Imagen</Text>
         </TouchableOpacity>
@@ -74,6 +76,11 @@ const ContentEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
           {images.map((img: string, index: number) => (
             <View key={index} style={styles.imageContainer}>
               <Image source={{ uri: img }} key={index} style={styles.image} />
+              {index === 0 && (
+                <View style={styles.coverLabel}>
+                  <Text style={styles.coverLabelText}>Portada</Text>
+                </View>
+              )}
               <TouchableOpacity
                 style={styles.deleteIcon}
                 onPress={() => removeImage(index)}
@@ -119,10 +126,10 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   contentText: {
-    fontSize: 16,
-    marginVertical: 10,
+    fontSize: 14,
+    marginBottom: 20,
     letterSpacing: 1,
-    lineHeight: 20,
+    lineHeight: 15,
   },
   contentTitleBtn: {
     flexDirection: "row",
@@ -170,5 +177,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.white,
+  },
+  coverLabel: {
+    position: "absolute",
+    top: 5,
+    left: 5,
+    backgroundColor: colors.grey,
+    padding: 5,
+    borderRadius: 5,
+  },
+  coverLabelText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
