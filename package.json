@@ -43,7 +43,8 @@
     "react-native-web": "~0.19.6",
     "zustand": "^4.5.1",
     "expo-image": "~1.10.6",
-    "@react-native-community/datetimepicker": "7.6.1"
+    "@react-native-community/datetimepicker": "7.6.1",
+    "expo-document-picker": "~11.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
