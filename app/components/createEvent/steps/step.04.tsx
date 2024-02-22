@@ -118,7 +118,12 @@ const DateEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
   useEffect(() => {
     const isValid = isValidStep();
     updateStepValidity(isValid);
-  }, []);
+  }, [
+    stateFormEvent.totalCapacity,
+    stateFormEvent.availableTickets,
+    stateFormEvent.eventDate,
+    stateFormEvent.eventEndDate,
+  ]);
 
   return (
     <Animated.View

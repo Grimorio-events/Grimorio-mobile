@@ -43,7 +43,7 @@ const CreateEvent = () => {
       case 5:
         return <DateEvent updateStepValidity={updateStepValidity} />;
       case 6:
-        return <ContentEvent />;
+        return <ContentEvent updateStepValidity={updateStepValidity} />;
       case 7:
         return <EventImportantInfo />;
       case 8:
