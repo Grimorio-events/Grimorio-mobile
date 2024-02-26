@@ -89,7 +89,7 @@ const ModalLocation = () => {
             setStreetAddress
           )}
           {renderTextInputWithLabel(
-            "Apt, Casa, Bloq (Si aplica)",
+            "Nivel, Local, Bloq, Piso (Si aplica)",
             apartment,
             setApartment
           )}

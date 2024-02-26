@@ -17,6 +17,7 @@ const useFormEventStore = create<FormEventStore>((set) => ({
     eventType: "", // EventType
     ticketPrice: 0, // DateEvent
     ownerId: "", // User information
+    title: "", // AboutEvent (New)
     description: "", // AboutEvent
     images: [], // ContentEvent
     eventDate: new Date(), // DateEvent
