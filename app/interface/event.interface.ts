@@ -7,6 +7,7 @@ export interface EventData {
   eventType: string;
   ticketPrice: number;
   ownerId: string;
+  title: string;
   description: string;
   images: string[];
   eventDate: Date;

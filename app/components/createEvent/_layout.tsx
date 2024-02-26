@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Keyboard } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import useEventStore from "@/app/stores/eventStore";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import InfoCreateEvent from "./steps/step.00";
 import EventType from "./steps/step.01";
 import AboutEvent from "./steps/step.02";
@@ -89,44 +89,57 @@ const CreateEvent = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.navHeader}>
-        <TouchableOpacity>
-          <Text>Exit</Text>
-        </TouchableOpacity>
-      </View>
-      {getStepContent(stateEvent)}
-      {!keyboardVisible && (
-        <View style={styles.navCreate}>
-          <TouchableOpacity style={styles.navBack} onPress={decrement}>
-            <Ionicons name="caret-back" size={24} color="black" />
-            <Text style={styles.navBackText}>Back</Text>
-          </TouchableOpacity>
-          {stateEvent !== 9 ? (
-            <TouchableOpacity
-              style={
-                isCurrentStepValid ? styles.navNext : styles.navNextDisable
-              }
-              onPress={increment}
-              disabled={!isCurrentStepValid}
-            >
-              <Text style={styles.navNextText}>Next</Text>
-              <Ionicons name="caret-forward" size={24} color="white" />
+    <>
+      {stateEvent !== 9 ? (
+        <SafeAreaView style={styles.container}>
+          <View style={styles.navHeader}>
+            <TouchableOpacity>
+              <Text>Exit</Text>
             </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={
-                isCurrentStepValid ? styles.navNext : styles.navNextDisable
-              }
-              // onPress={increment}
-              disabled={!isCurrentStepValid}
-            >
-              <Text style={styles.navNextText}>Finalizar y Publicar</Text>
-            </TouchableOpacity>
+          </View>
+          {getStepContent(stateEvent)}
+          {!keyboardVisible && (
+            <View style={styles.navCreate}>
+              <TouchableOpacity style={styles.navBack} onPress={decrement}>
+                <Ionicons name="caret-back" size={24} color="black" />
+                <Text style={styles.navBackText}>Back</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  isCurrentStepValid ? styles.navNext : styles.navNextDisable
+                }
+                onPress={increment}
+                disabled={!isCurrentStepValid}
+              >
+                <Text style={styles.navNextText}>Next</Text>
+                <Ionicons name="caret-forward" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+          )}
+        </SafeAreaView>
+      ) : (
+        <View style={styles.container}>
+          {getStepContent(stateEvent)}
+          {!keyboardVisible && (
+            <View style={styles.navCreate}>
+              <TouchableOpacity style={styles.navBack} onPress={decrement}>
+                <Ionicons name="caret-back" size={24} color="black" />
+                <Text style={styles.navBackText}>Back</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  isCurrentStepValid ? styles.navNext : styles.navNextDisable
+                }
+                // onPress={increment}
+                disabled={!isCurrentStepValid}
+              >
+                <Text style={styles.navNextText}>Finalizar y Publicar</Text>
+              </TouchableOpacity>
+            </View>
           )}
         </View>
       )}
-    </SafeAreaView>
+    </>
   );
 };
 
