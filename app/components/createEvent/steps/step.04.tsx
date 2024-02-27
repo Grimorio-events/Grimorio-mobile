@@ -36,8 +36,8 @@ const DateEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
   const [show, setShow] = useState(false);
   const [isSettingEnd, setIsSettingEnd] = useState(false);
   const [isSettingTicketEnd, setIsSettingTicketEnd] = useState(false);
-  const [capacity, setCapacity] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [capacity, setCapacity] = useState("");
+  const [price, setPrice] = useState("");
 
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     setShow(false);
@@ -79,16 +79,36 @@ const DateEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
   };
 
   const handleCapacityChange = (num: string) => {
-    const number = parseInt(num, 10);
-    setCapacity(isNaN(number) ? 0 : number);
-    updateFormEvent("totalCapacity", number);
-    updateFormEvent("availableTickets", number);
+    // Validar si el valor ingresado es un número
+    const isValidNumber = /^[0-9]*$/.test(num);
+
+    if (isValidNumber) {
+      // Si es un número válido, actualiza el estado de capacity y realiza las actualizaciones necesarias
+      setCapacity(num);
+      updateFormEvent("totalCapacity", parseInt(num, 10));
+      updateFormEvent("availableTickets", parseInt(num, 10));
+    } else {
+      // Si no es un número válido, no actualices el estado de capacity ni realices otras actualizaciones
+    }
   };
 
   const handlePriceChange = (num: string) => {
+    // Validar que solo se ingresen números y un solo punto decimal
+    const regex = /^[0-9]*(\.[0-9]{0,2})?$/;
+    if (!regex.test(num)) {
+      return; // No actualizar el estado si la entrada no es válida
+    }
+
+    // Actualizar el estado con el nuevo valor
+    setPrice(num);
+
+    // Convertir el valor a un número
     const number = parseFloat(num);
-    setPrice(isNaN(number) ? 0 : number);
-    updateFormEvent("ticketPrice", number);
+
+    const formattedNumber =
+      number % 1 !== 0 ? number.toFixed(2) : `${number}.00`;
+    // Actualizar el valor en el formulario
+    updateFormEvent("ticketPrice", formattedNumber);
   };
 
   const isValidStep = () => {
@@ -197,6 +217,7 @@ const DateEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
               <View style={styles.priceContainer}>
                 <Text style={styles.currencySymbol}>$</Text>
                 <TextInput
+                  inputMode="decimal"
                   placeholder="0.00"
                   keyboardType="numeric"
                   style={styles.priceInput}

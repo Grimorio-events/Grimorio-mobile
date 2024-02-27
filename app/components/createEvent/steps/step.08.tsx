@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import Animated, {
@@ -18,9 +19,10 @@ import React, { useEffect, useState } from "react";
 import useFormEventStore from "@/app/stores/formEventStore";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { colors } from "@/app/styles/colors";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Fontisto, Foundation, Ionicons } from "@expo/vector-icons";
 import { getUserByClerkId } from "@/app/utils/userDataClerk";
 import useAuthToken from "@/app/hooks/useAuthToken";
+import Swiper from "react-native-swiper";
 
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 600;
@@ -50,14 +52,19 @@ const Mes = [
   "Diciembre",
 ];
 
+interface OwnerType {
+  image_url: string;
+  first_name?: string;
+  last_name?: string;
+}
+
 const FinishAndPublish = () => {
   const { stateFormEvent } = useFormEventStore();
 
-  const authToken = useAuthToken();
+  const { token } = useAuthToken();
   const userId = stateFormEvent.ownerId;
 
-  const [owner, setOwner] = useState(null);
-  // console.log("🚀 ~ owner:", owner?.first_name, owner?.last_name);
+  const [owner, setOwner] = useState<OwnerType | null>(null);
   const [imgCover, setImgCover] = useState<string>(stateFormEvent.images[0]);
   const [images, setImages] = useState<string[]>(stateFormEvent.images);
   const [dateStar, setDataStar] = useState(stateFormEvent.eventDate);
@@ -79,26 +86,26 @@ const FinishAndPublish = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
 
-  const imageAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateY: interpolate(
-            scrollOffset.value,
-            [-IMG_HEIGHT, 0, IMG_HEIGHT, IMG_HEIGHT],
-            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
-          ),
-        },
-        {
-          scale: interpolate(
-            scrollOffset.value,
-            [-IMG_HEIGHT, 0, IMG_HEIGHT],
-            [2, 1, 1]
-          ),
-        },
-      ],
-    };
-  });
+  // const imageAnimatedStyle = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [
+  //       {
+  //         translateY: interpolate(
+  //           scrollOffset.value,
+  //           [-IMG_HEIGHT, 0, IMG_HEIGHT, IMG_HEIGHT],
+  //           [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
+  //         ),
+  //       },
+  //       {
+  //         scale: interpolate(
+  //           scrollOffset.value,
+  //           [-IMG_HEIGHT, 0, IMG_HEIGHT],
+  //           [1, 1, 1]
+  //         ),
+  //       },
+  //     ],
+  //   };
+  // });
 
   const initialRegion = {
     latitude: stateFormEvent.latitude || 37.33,
@@ -109,9 +116,9 @@ const FinishAndPublish = () => {
 
   useEffect(() => {
     const ownerUser = async () => {
-      if (authToken) {
+      if (token) {
         try {
-          const response = await getUserByClerkId(userId, authToken);
+          const response = await getUserByClerkId(userId, token);
           setOwner(response.data);
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -131,16 +138,29 @@ const FinishAndPublish = () => {
       entering={FadeInRight}
       exiting={FadeOutLeft}
     >
-      <ScrollView
+      <Animated.ScrollView
         contentContainerStyle={{ paddingBottom: 50 }}
         scrollEventThrottle={16}
         ref={scrollRef}
       >
-        <Image
-          source={{ uri: imgCover }}
-          style={styles.imageCover}
-          resizeMode="cover"
-        />
+        <Swiper
+          style={{ height: IMG_HEIGHT }}
+          autoplay={false}
+          index={0}
+          dotColor={colors.grey}
+          activeDotColor={colors.white}
+        >
+          {images.map((img: string, index: number) => (
+            <View key={index} style={{ flex: 1 }}>
+              <Image
+                source={{ uri: img }}
+                style={styles.imageCover}
+                resizeMode="cover"
+              />
+            </View>
+          ))}
+        </Swiper>
+
         <View style={styles.containerEvent}>
           <View style={styles.titleAndTicket}>
             <View>
@@ -171,6 +191,32 @@ const FinishAndPublish = () => {
             </View>
             <Text style={styles.contentText}>{stateFormEvent.description}</Text>
           </View>
+
+          <View style={styles.availableTickets}>
+            <Ionicons name="ticket-outline" size={20} color="black" />
+            <Text>{stateFormEvent.availableTickets}</Text>
+            <Text style={styles.label}>Disponibles</Text>
+          </View>
+
+          <TouchableOpacity
+            style={styles.ownerContainer}
+            onPress={() => console.log(owner?.first_name)}
+          >
+            <Image
+              source={{ uri: owner?.image_url }}
+              style={styles.avatarOwner}
+            />
+            <View style={{ marginLeft: 15 }}>
+              <Text style={styles.label}>Organizador</Text>
+              <Text>
+                {owner?.first_name} {owner?.last_name}
+              </Text>
+              <View style={{ flexDirection: "row", gap: 5 }}>
+                <AntDesign name="star" size={16} color="black" />
+                <Text>5.0</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
 
           <View style={styles.containerStartAndEnd}>
             <View style={styles.containerEvenDate}>
@@ -239,7 +285,6 @@ const FinishAndPublish = () => {
             </View> */}
 
           <View style={styles.containterDesc}>
-            {/* <Text style={styles.subTitle}>Ubicación</Text> */}
             <View style={styles.labelGroup}>
               <View>
                 <Text style={styles.label}>Dirección</Text>
@@ -281,24 +326,36 @@ const FinishAndPublish = () => {
             </MapView>
           </View>
 
-          <Text>
-            Tickets: {stateFormEvent.totalCapacity} /{" "}
-            {stateFormEvent.availableTickets}
-          </Text>
-
-          {images.map((img: string, index: number) => (
-            <Image key={index} source={{ uri: img }} style={styles.image} />
-          ))}
-          <Text>
+          {/* <Text>
             {stateFormEvent.status ? stateFormEvent.status : "Pending"}
-          </Text>
+          </Text> */}
 
-          <Text>{stateFormEvent.ageRestriction}</Text>
-          <Text>{stateFormEvent.accessibilityInfo}</Text>
+          {stateFormEvent.ageRestriction && (
+            <View style={styles.importanInfo}>
+              <Foundation
+                name="prohibited"
+                size={24}
+                color={colors.black}
+                style={{ marginRight: 10 }}
+              />
+              <Text>{stateFormEvent.ageRestriction}</Text>
+            </View>
+          )}
+          {stateFormEvent.accessibilityInfo && (
+            <View style={styles.importanInfo}>
+              <Fontisto
+                name="paralysis-disability"
+                size={24}
+                color={colors.black}
+                style={{ marginRight: 10 }}
+              />
+              <Text>{stateFormEvent.accessibilityInfo}</Text>
+            </View>
+          )}
 
           <Text>{stateFormEvent.refundPolicy}</Text>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </Animated.View>
   );
 };
@@ -406,5 +463,41 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: colors.white,
+  },
+  importanInfo: {
+    marginVertical: 10,
+    backgroundColor: colors.background,
+    borderWidth: 2,
+    borderColor: colors.black,
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+  },
+  ownerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 30,
+  },
+  avatarOwner: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  availableTickets: {
+    flexDirection: "row",
+    marginTop: 20,
+    alignItems: "center",
+    gap: 10,
   },
 });

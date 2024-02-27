@@ -2,24 +2,28 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/clerk-expo";
 
 const useAuthToken = () => {
-  const [token, setToken] = useState<string | null>(null);
-  const { getToken } = useAuth();
+  const { getToken, sessionId } = useAuth();
+
+  const [authState, setAuthState] = useState<{
+    token: string | null;
+    sessionId: string | null;
+  }>({ token: null, sessionId: null });
 
   useEffect(() => {
-    const fetchToken = async () => {
+    const fetchTokenAndSessionId = async () => {
       try {
         const jwt = await getToken();
-        setToken(jwt);
+        setAuthState({ token: jwt || null, sessionId: sessionId || null });
       } catch (error) {
-        console.error("Error al obtener el token:", error);
-        setToken(null);
+        console.error("Error al obtener el token o sessionId:", error);
+        setAuthState({ token: null, sessionId: null });
       }
     };
 
-    fetchToken();
-  }, [getToken]);
+    fetchTokenAndSessionId();
+  }, [getToken, sessionId]);
 
-  return token;
+  return authState;
 };
 
 export default useAuthToken;

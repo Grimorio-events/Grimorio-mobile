@@ -14,13 +14,17 @@ import EventImportantInfo from "./steps/step.06";
 import EventDocuments from "./steps/step.07";
 import FinishAndPublish from "./steps/step.08";
 import useFormEventStore from "@/app/stores/formEventStore";
+import { createEvent } from "@/app/utils/event.service";
+import useAuthToken from "@/app/hooks/useAuthToken";
 
 import styles from "./styles";
 
 const CreateEvent = () => {
   const { user } = useUser();
+  const { token, sessionId } = useAuthToken();
   const [loading, setLoading] = useState(false);
   const { stateEvent, increment, decrement } = useEventStore();
+  const { stateFormEvent } = useFormEventStore();
   const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -28,6 +32,18 @@ const CreateEvent = () => {
 
   const updateStepValidity = (isValid: boolean) => {
     setIsCurrentStepValid(isValid);
+  };
+
+  const handleSubmitEvent = async (event: any) => {
+    event.preventDefault();
+    if (token && sessionId) {
+      try {
+        const creteEvent = await createEvent(stateFormEvent, token, sessionId);
+        console.log("🚀 ~ handleSubmitEvent ~ creteEvent:", creteEvent);
+      } catch (error) {
+        console.error("Error Create Event:", error);
+      }
+    }
   };
 
   const getStepContent = (step: number) => {
@@ -130,7 +146,7 @@ const CreateEvent = () => {
                 style={
                   isCurrentStepValid ? styles.navNext : styles.navNextDisable
                 }
-                // onPress={increment}
+                onPress={handleSubmitEvent}
                 disabled={!isCurrentStepValid}
               >
                 <Text style={styles.navNextText}>Finalizar y Publicar</Text>
