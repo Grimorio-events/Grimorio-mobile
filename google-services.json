@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "55164603383",
-    "project_id": "grimorio-cfd09",
-    "storage_bucket": "grimorio-cfd09.appspot.com"
+    "project_number": "810313169491",
+    "project_id": "winged-yeti-414217",
+    "storage_bucket": "winged-yeti-414217.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:55164603383:android:781436a19b008ee001bcf2",
+        "mobilesdk_app_id": "1:810313169491:android:31beb151e243a6349624a6",
         "android_client_info": {
-          "package_name": "com.zaku.grimorio"
+          "package_name": "com.grimorio.grimorioevent"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAbQ_CQGXqg3DGOAEr3oANU51S6e0Qh_9s"
+          "current_key": "AIzaSyDI0jzAzPhtZoXkTmGXEBZ4zRY74caGOSQ"
         }
       ],
       "services": {

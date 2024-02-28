@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBSQe574jdFJl1Bw7YttkuyJ8HckAa-jTE</string>
+	<string>AIzaSyAjch6FnkuEswR-RUrntrXv5i0vPz7Bmeo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>55164603383</string>
+	<string>810313169491</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.zaku.grimorio</string>
+	<string>com.grimorio.grimorioevent</string>
 	<key>PROJECT_ID</key>
-	<string>grimorio-cfd09</string>
+	<string>winged-yeti-414217</string>
 	<key>STORAGE_BUCKET</key>
-	<string>grimorio-cfd09.appspot.com</string>
+	<string>winged-yeti-414217.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:55164603383:ios:36e576d00745413c01bcf2</string>
+	<string>1:810313169491:ios:e41a87b58b3a75749624a6</string>
 </dict>
 </plist>

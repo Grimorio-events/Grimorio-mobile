@@ -117,6 +117,7 @@ const FinishAndPublish = () => {
   useEffect(() => {
     const ownerUser = async () => {
       if (token) {
+        console.log("🚀 ~ useEffect ~ Bring Owner data");
         try {
           const response = await getUserByClerkId(userId, token);
           setOwner(response.data);
@@ -130,7 +131,7 @@ const FinishAndPublish = () => {
     // Dividimos la dirección basada en las comas y almacenar los fragmentos
     const parts = stateFormEvent.address.split(",").map((part) => part.trim());
     setAddressParts(parts);
-  }, [stateFormEvent.address, stateFormEvent.ownerId]);
+  }, [stateFormEvent.address, stateFormEvent.ownerId, token]);
 
   return (
     <Animated.View

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "winged-yeti-414217",
+  "private_key_id": "79f48e2c3fa56f1625e54e8a97882bf0d2c75ff2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC3SAUvaQWqdPKY\nFwBHUTRAowH+PgMrbrFAAzYylVN+i3f05+o4xpWpx5hgaQIdh7G067wIx8ODWvm0\nw85m+JrM4uBb2dPbhQYBDDdxvG1y7Yi4J5347zgKvTtk7zlHaVr8TZCsxBnNea2O\nSGpp53Q+kYOOyg/Wa1jiUuHxkosF/4mZFzkYX4xWgHoKVnLSgbgpeIuDTXf4M9Jg\n+O2CKIDqnHrswPt2DqKv1UV5/xykdxfuTHPKttJ5/zzRZODt/OemF1aVUgZY5YGl\n0ZiJdTy6RyOiR9FVT+CF/Nbwy0J1+0DpqaJ/WJOdBox5srlsOjOx7yGDRyhmJg5Q\nB47KPWzTAgMBAAECggEAHEW2Uw1qy9QVdgOaTeYHXu8mSA9N0t3U5tB4BE6Hni4q\nd3Ns7IwpmxKIfVrFckOz1HpGu74A+VrHySwpQzYXPwLCZDjSVvsKpY+6X8eWxJNC\ns1GdK0DPjsyJBHVoiw0D9YaLijMH3evmq1udWq/S/THaLuUZk1Rk1ii95NNbsbVp\n/2Tm8+tPVZ97SRlLevRIn0NOcpGzDtmNPUThHkBgkHSQSI3y1pLUgBrWHeA2p4fI\nvYQ+AQmHUS6OvTVsvPbmHzc0bVNrwpelzxEWrMxTW+RByeikepUcYkXRDM6cAVG4\nyI0a3bQ45DCcxZZpGxBkZWcVqlAnmM9NUEOdcF4nfQKBgQDqFHnkrTH9HmPPWk0D\ngY9c5EhxvMNsUCHBZL2k6c3Ory+ospZHr0CgzdquYLGzhYO0dCcCZIO7IpSIVsWm\nPS8U7Osct1bISEgFtagoxCZXvEDtBHlPVtz0Ry9R1g60q7xYFhhinaae9lKEf9/E\ngRHWJRDIbexbRaqMswkqoZopjQKBgQDIccOsFyaJ4/TjF4qan9h5ito9GpgiaGGT\n0dNf6f6tmjEuHs/5QvUuAlusApEfcDNCHpepGiRYKYxCdOuUHuDdFw+lT4UIqLFt\no1XYtgAmSAolfnv1ZYKV9guql3JmqxFWsd2cvq8q8gAQRtNoWlMPf4lgOh18Dp6t\nKqnYoYnn3wKBgQCWeR02bEOzNCLzO1hAhbuz+ie7vZ1edlCMsobaiVW8pI8dgdfr\nMvR3qn0GFbCF97EHgpdFCXpJBNy4nBcoWzJ14CrvZcgKrbRmvzTfJ+CCC8ks0/Br\nmSomedAoalM/vxovAd0hH7jpfOzkshMVjeb6Yw9b2JXUwn71PW4KEqI4TQKBgQCO\nPPynn/3/F75tcAUxWIDbLwdTGQ4gTIYByYH/rCLHuoVvvvnCXhtyPMYkt+WXs50M\nLH1eyGhGD6Wyexm5EHhtK7I0kstKq7rMnH2MvQo6ICDjHnCEYTZbiDAbLEFITdiN\n9sXWNxJCnVwiMMBQathKRSyNFnBZ2l4LcBz61xbvbQKBgFcNO4+tJyPWSiFAfyMl\nsDNj6TtnXpu+RPh0VvtN0BH6/YMLTryDvmfiTBRMlw043FYrZmi51e0yJfg+7Zvi\nSNgH3gxPCHcOfxebSheFRKcMc6LkrUQmUdxsW9OyltobxzSAM9zEOkN1bLdobCuE\n7Aa33CEbJHZilHt1q4vQaoS3\n-----END PRIVATE KEY-----\n",
+  "client_email": "grimorio-db-mg@winged-yeti-414217.iam.gserviceaccount.com",
+  "client_id": "113139198883639622379",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/grimorio-db-mg%40winged-yeti-414217.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

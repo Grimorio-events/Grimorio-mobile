@@ -16,6 +16,7 @@ import FinishAndPublish from "./steps/step.08";
 import useFormEventStore from "@/app/stores/formEventStore";
 import { createEvent } from "@/app/utils/event.service";
 import useAuthToken from "@/app/hooks/useAuthToken";
+import uploadImagesToFirebase from "@/app/utils/img.firebase";
 
 import styles from "./styles";
 
@@ -36,10 +37,50 @@ const CreateEvent = () => {
 
   const handleSubmitEvent = async (event: any) => {
     event.preventDefault();
+    console.log("🚀 ~ old ~ imgs:", stateFormEvent.images);
+
     if (token && sessionId) {
       try {
-        const creteEvent = await createEvent(stateFormEvent, token, sessionId);
-        console.log("🚀 ~ handleSubmitEvent ~ creteEvent:", creteEvent);
+        // Filtrar imágenes que no están ya subidas a Firebase Storage
+        const imagesToUpload = stateFormEvent.images.filter(
+          (img) => !img.startsWith("https://firebasestorage.googleapis.com")
+        );
+        console.log("🚀 ~ imagesToUpload:", imagesToUpload);
+
+        // Subir solo las imágenes nuevas y obtener las URLs
+        const uploadedUrls =
+          imagesToUpload.length > 0
+            ? await uploadImagesToFirebase(imagesToUpload)
+            : [];
+
+        // Construir el nuevo array de imágenes combinando las ya subidas con las nuevas
+        const allImagesUrls = [
+          ...stateFormEvent.images.filter((img) =>
+            img.startsWith("https://firebasestorage.googleapis.com")
+          ),
+          ...uploadedUrls,
+        ];
+
+        // Actualizar el estado del formulario con todas las URLs
+        updateFormEvent("images", allImagesUrls);
+
+        // Verificar si stateFormEvent.images es un array con elementos
+        // y si todos comienzan con el prefijo especificado
+        const allImagesAreFromFirebaseStorage =
+          stateFormEvent.images.length > 0 &&
+          stateFormEvent.images.every((img) =>
+            img.startsWith("https://firebasestorage.googleapis.com")
+          );
+
+        if (allImagesAreFromFirebaseStorage) {
+          const creteEvent = await createEvent(
+            stateFormEvent,
+            token,
+            sessionId
+          );
+          console.log("🚀 ~ handleSubmitEvent ~ creteEvent:", creteEvent);
+          console.log("🚀 ~ new ~ imgs:", stateFormEvent.images);
+        }
       } catch (error) {
         console.error("Error Create Event:", error);
       }
