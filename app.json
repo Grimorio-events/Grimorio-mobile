@@ -59,5 +59,10 @@
         }
       ]
     ]
+    // "extra": {
+    //   "googleCloud": {
+    //     "storageKey": "assets/gcp/winged-yeti-414217-79f48e2c3fa5.json"
+    //   }
+    // }
   }
 }

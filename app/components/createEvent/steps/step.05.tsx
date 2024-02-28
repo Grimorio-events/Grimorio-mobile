@@ -23,6 +23,10 @@ const ContentEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
   const [images, setImages] = useState<string[]>(stateFormEvent.images);
 
   const pickImage = async () => {
+    if (images.length >= 10) {
+      return; // Detener la función si ya hay 10 o más imágenes
+    }
+
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -67,9 +71,11 @@ const ContentEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
       </Text>
       <View style={styles.contentTitleBtn}>
         <Text style={styles.subTitle}>Imágenes</Text>
-        <TouchableOpacity style={styles.btnPickTitle} onPress={pickImage}>
-          <Text>Agregar Imagen</Text>
-        </TouchableOpacity>
+        {images.length < 10 && (
+          <TouchableOpacity style={styles.btnPickTitle} onPress={pickImage}>
+            <Text>Agregar Imagen</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <ScrollView style={styles.contentImgs}>
         <View style={styles.imagesGrid}>
@@ -97,10 +103,12 @@ const ContentEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
               </TouchableOpacity>
             </View>
           ))}
-          <TouchableOpacity style={styles.btnPickImg} onPress={pickImage}>
-            <Entypo name="plus" size={34} color={colors.grey} />
-            <Text>Agregar mas</Text>
-          </TouchableOpacity>
+          {images.length < 10 && (
+            <TouchableOpacity style={styles.btnPickImg} onPress={pickImage}>
+              <Entypo name="plus" size={34} color={colors.grey} />
+              <Text>Agregar mas</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </Animated.View>

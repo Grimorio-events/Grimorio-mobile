@@ -18,14 +18,14 @@ const AboutEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
   const handleChange = (field: "title" | "description", text: string) => {
     if (field === "description") {
       const words = text.split(/\s+/).filter(Boolean);
-      if (words.length <= 17) {
+      if (words.length <= 100) {
         setDescription(text);
         updateFormEvent("description", text);
       } else {
-        console.log("La descripción no debe exceder las 20 palabras.");
+        console.log("La descripción no debe exceder las 100 palabras.");
       }
     } else if (field === "title") {
-      if (text.length <= 20) {
+      if (text.length <= 17) {
         setTitle(text);
         updateFormEvent("title", text);
       } else {
@@ -51,7 +51,7 @@ const AboutEvent: React.FC<StepComponentProps> = ({ updateStepValidity }) => {
     >
       <Text style={styles.title}>Cuéntanos de tu evento</Text>
       <Text style={styles.contentText}>
-        Escribe una breve descripción de tu evento en 20 palabras o menos.
+        Escribe una breve descripción de tu evento en 100 palabras o menos.
       </Text>
       <TextInput
         onChangeText={(text) => handleChange("description", text)}
