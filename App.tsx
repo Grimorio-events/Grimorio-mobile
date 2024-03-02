@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import * as SecureStore from "expo-secure-store";
 import AppNavigator from "./app/navigation/app.navigation";
+import { ApolloProvider } from "@apollo/client";
+import client from "./app/apollo-client";
 
 const EXPO_PUBLIC_CLERK_KEY = process.env.EXPO_PUBLIC_CLERK_KEY;
 
@@ -29,9 +31,11 @@ export default function App() {
       publishableKey={EXPO_PUBLIC_CLERK_KEY!}
       tokenCache={tokenCache}
     >
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <ApolloProvider client={client}>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </ApolloProvider>
     </ClerkProvider>
   );
 }

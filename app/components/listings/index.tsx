@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
-import { ListingItem } from "@/interfaces/listing";
 import ListCard from "../ticketCard/_layout";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, Text } from "react-native";
 import { colors } from "@/app/styles/colors";
+import { EventData } from "@/app/interface/event.interface";
 
 interface props {
-  listings: any[];
+  eventData: any[];
   category: string;
   refresh: number;
 }
 
-const Listings = ({ listings: items, category, refresh }: props) => {
+const Listings = ({ eventData: items, category, refresh }: props) => {
   const [loading, setLoading] = useState(false);
-  const listRef = useRef<FlashList<ListingItem>>(null);
+  const listRef = useRef<FlashList<EventData>>(null);
 
   useEffect(() => {
     if (refresh) {
@@ -32,9 +32,7 @@ const Listings = ({ listings: items, category, refresh }: props) => {
     }, 200);
   }, [category]);
 
-  const renderRow = ({ item }: { item: ListingItem }) => (
-    <ListCard item={item} />
-  );
+  const renderRow = ({ item }: { item: EventData }) => <ListCard item={item} />;
 
   return (
     <FlashList
@@ -42,7 +40,7 @@ const Listings = ({ listings: items, category, refresh }: props) => {
       renderItem={renderRow}
       ref={listRef}
       estimatedItemSize={100}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item: EventData, index) => item.id || String(index)}
       // ItemSeparatorComponent={<Text>SEPARATOR TEST</Text>} // Componente separador (op)
       ListEmptyComponent={<Text>Not found or Empty section</Text>}
       renderScrollComponent={ScrollView}

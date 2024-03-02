@@ -1,7 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { colors } from "@/app/styles/colors";
-import { ListingItem } from "@/interfaces/listing";
+import { EventData } from "@/app/interface/event.interface";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/app/types/types";
@@ -11,7 +11,7 @@ import { styles } from "./styles";
 
 type NavigationType = NativeStackNavigationProp<RootStackParamList, "ListCard">;
 
-const ListCard = ({ item }: { item: ListingItem }) => {
+const ListCard = ({ item }: { item: EventData }) => {
   const navigation = useNavigation<NavigationType>();
 
   // Función para recortar el string
@@ -30,15 +30,19 @@ const ListCard = ({ item }: { item: ListingItem }) => {
       exiting={FadeOutLeft}
     >
       <TouchableOpacity
-        onPress={() => navigation.navigate("DetailsPage", { id: item.id })}
+        onPress={() =>
+          navigation.navigate("DetailsPage", { id: item.id as string })
+        }
         style={styles.ticketLeft}
       >
         <View style={styles.dottedBorderLeft} />
         <View style={styles.ticketLeftContent}>
-          <Text style={styles.eventTitle}>{truncateString(item.name, 20)}</Text>
+          <Text style={styles.eventTitle}>
+            {truncateString(item.title, 20)}
+          </Text>
           <View style={styles.eventInfoContent}>
             <FontAwesome name="location-arrow" size={14} style={styles.icons} />
-            <Text style={styles.eventTextInfo}>{item.host_location}</Text>
+            <Text style={styles.eventTextInfo}>{item.address}</Text>
           </View>
           <View style={styles.eventInfoContent}>
             <AntDesign name="clockcircleo" size={14} style={styles.icons} />
@@ -47,7 +51,7 @@ const ListCard = ({ item }: { item: ListingItem }) => {
           <View style={styles.eventInfoContentQ}>
             <Ionicons name="people-sharp" size={14} style={styles.icons} />
             <Text style={styles.eventTextInfo}>
-              {item.host_listings_count} quotas
+              {item.totalCapacity} quotas
             </Text>
           </View>
         </View>
@@ -58,17 +62,19 @@ const ListCard = ({ item }: { item: ListingItem }) => {
           </View>
           <View style={styles.cardInfoDate}>
             <Ionicons name="ticket-outline" size={24} color={colors.white} />
-            <Text style={styles.ticketInfoText}>$12.000</Text>
+            <Text style={styles.ticketInfoText}>$ {item.ticketPrice}</Text>
           </View>
         </View>
       </TouchableOpacity>
       <View style={styles.ticketRight}>
         <View style={styles.dottedBorderRight} />
         <TouchableOpacity
-          onPress={() => navigation.navigate("DetailsPage", { id: item.id })}
+          onPress={() =>
+            navigation.navigate("DetailsPage", { id: item.id as string })
+          }
           style={styles.imageContent}
         >
-          <Image source={{ uri: item.medium_url }} style={styles.image} />
+          <Image source={{ uri: item.images[0] }} style={styles.image} />
         </TouchableOpacity>
         {/* <View style={styles.ticketInfoHost}>
           <Image
