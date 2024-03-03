@@ -1,12 +1,4 @@
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
   FadeInRight,
   FadeOutLeft,
@@ -20,8 +12,10 @@ import { AntDesign, Fontisto, Foundation, Ionicons } from "@expo/vector-icons";
 import { getUserByClerkId } from "@/app/utils/userDataClerk";
 import useAuthToken from "@/app/hooks/useAuthToken";
 import Swiper from "react-native-swiper";
-import { styles } from "./styles";
 import { EventData } from "@/app/interface/event.interface";
+import { useCounterStore } from "@/app/stores/ticketPurcheStore";
+
+import { styles } from "./styles";
 
 const IMG_HEIGHT = 600;
 
@@ -61,6 +55,7 @@ interface OwnerType {
 }
 
 const TicketEvent: React.FC<TicketEventProps> = ({ data }) => {
+  const { setMaxCount } = useCounterStore();
   const { token } = useAuthToken();
   const userId = data.ownerId;
 
@@ -96,15 +91,14 @@ const TicketEvent: React.FC<TicketEventProps> = ({ data }) => {
   };
 
   useEffect(() => {
+    setMaxCount(data?.availableTickets ? data?.availableTickets : 0);
     const ownerUser = async () => {
-      if (token) {
-        console.log("🚀 ~ useEffect ~ Bring Owner data");
-        try {
-          const response = await getUserByClerkId(userId, token);
-          setOwner(response.data);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
+      console.log("🚀 ~ useEffect ~ Bring Owner data");
+      try {
+        const response = await getUserByClerkId(userId);
+        setOwner(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     };
     ownerUser();
@@ -112,7 +106,7 @@ const TicketEvent: React.FC<TicketEventProps> = ({ data }) => {
     // Dividimos la dirección basada en las comas y almacenar los fragmentos
     const parts = data.address.split(",").map((part) => part.trim());
     setAddressParts(parts);
-  }, [data.address, data.ownerId, token]);
+  }, [data, data.address, data.ownerId, token]);
 
   return (
     <Animated.View

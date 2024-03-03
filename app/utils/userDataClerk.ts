@@ -1,11 +1,7 @@
 import api from "./api";
 
-const getUserByClerkId = async (userId: string, token: string) => {
-  return api.get(`/users/clerk/${userId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+const getUserByClerkId = async (userId: string) => {
+  return api.get(`/users/clerk/${userId}`, {});
 };
 
 export { getUserByClerkId };
