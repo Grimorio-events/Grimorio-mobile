@@ -15,21 +15,35 @@ export default StyleSheet.create({
     alignItems: "center",
     padding: 30,
   },
-  containerOptions: {
-    flexDirection: "row",
-    gap: 45,
-    alignContent: "center",
-    justifyContent: "center",
+  buttons: {
+    marginTop: 50,
+    width: "100%",
+    flex: 1,
   },
-  containerIcon: {
+  input: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 5,
   },
-  textProfile: {
+  inputProfle: {
+    width: "100%",
+    height: 30,
+    paddingHorizontal: 10,
+    marginVertical: 7,
     color: colors.text,
     fontSize: 15,
     justifyContent: "center",
+    borderBottomColor: colors.secundary,
+  },
+  inputEditProfle: {
+    width: "100%",
+    height: 50,
+    paddingHorizontal: 10,
+    marginVertical: 7,
+    color: colors.text,
+    fontSize: 15,
+    justifyContent: "center",
+    borderBottomWidth: 1,
     borderBottomColor: colors.secundary,
   },
   card: {
@@ -53,9 +67,6 @@ export default StyleSheet.create({
     height: 100,
     borderRadius: 50,
     backgroundColor: colors.black,
-  },
-  containerContent: {
-    backgroundColor: "green",
   },
   inputIOS: {
     // estilos para iOS

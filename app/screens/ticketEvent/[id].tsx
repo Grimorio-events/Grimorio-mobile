@@ -13,6 +13,10 @@ import { colors } from "@/app/styles/colors";
 import TicketEvent from "@/app/components/ticketEvent/_layout";
 import { AntDesign } from "@expo/vector-icons";
 import { useCounterStore } from "@/app/stores/ticketPurcheStore";
+import useAuthToken from "@/app/hooks/useAuthToken";
+import ModalBuyTicket from "@/app/components/modal/modal.buyTicket";
+import ModalLogin from "@/app/components/modal/modal.login";
+import { useUser } from "@clerk/clerk-expo";
 
 import styles from "./styles";
 
@@ -50,9 +54,11 @@ const GET_EVENT_BY_ID = gql`
 `;
 
 const DetailsPage = () => {
+  const { token, sessionId } = useAuthToken();
+  const { user } = useUser();
   const { count, increment, decrement } = useCounterStore();
   const { id } = useLocalSearchParams();
-  const { data, loading, error } = useQuery(GET_EVENT_BY_ID, {
+  const { data, loading, error, refetch } = useQuery(GET_EVENT_BY_ID, {
     variables: { id },
   });
 
@@ -73,7 +79,14 @@ const DetailsPage = () => {
     );
 
   const event = data?.event;
+  const eventId = event?.id;
+  const userId = user?.id;
   const totalCost = (count * event?.ticketPrice).toFixed(2);
+
+  // Después de la compra exitosa, llama a refetch para actualizar los datos
+  const handleBuySuccess = async () => {
+    await refetch();
+  };
 
   return (
     <View style={globalStyles.container}>
@@ -105,36 +118,21 @@ const DetailsPage = () => {
         onRequestClose={() => setModalSate(false)}
       >
         <View style={styles.modal}>
-          <View style={styles.modalView}>
-            <View style={styles.containerModal}>
-              <View style={styles.InfoModal}>
-                <Text style={styles.textInfoModal}>Valor por ticket: </Text>
-                <Text style={styles.textInfoModal}>${event?.ticketPrice}</Text>
-              </View>
-              <View style={styles.InfoModal}>
-                <Text style={styles.textInfoModal}>Cantidad de tickets: </Text>
-                <Text style={styles.textInfoModal}>{count}</Text>
-              </View>
-              <View style={styles.InfoModal}>
-                <Text style={styles.textTotalModal}>Total: </Text>
-                <Text style={styles.textTotalModal}>${totalCost}</Text>
-              </View>
-            </View>
-            <View style={styles.btnModal}>
-              <TouchableOpacity
-                style={styles.btnCancel}
-                onPress={() => setModalSate(false)}
-              >
-                <Text style={styles.textBtn}>Cancelar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btnBuy}
-                onPress={() => setModalSate(false)}
-              >
-                <Text style={styles.textBtn}>Confirmar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          {token && sessionId ? (
+            <ModalBuyTicket
+              event={event}
+              totalCost={totalCost}
+              count={count}
+              eventId={eventId}
+              token={token}
+              sessionId={sessionId}
+              setModalSate={setModalSate}
+              userId={userId}
+              handleBuySuccess={handleBuySuccess}
+            />
+          ) : (
+            <ModalLogin setModalSate={setModalSate} />
+          )}
         </View>
       </Modal>
     </View>

@@ -1,5 +1,5 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { AntDesign, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { colors } from "@/app/styles/colors";
 import { EventData } from "@/app/interface/event.interface";
 import { useNavigation } from "@react-navigation/native";

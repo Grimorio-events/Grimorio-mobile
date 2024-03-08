@@ -4,7 +4,8 @@ import UserProfile from "../../components/profile/_layout";
 import LoginScreen from "@/app/components/login/_layout";
 import SignupScreen from "@/app/components/signup/_layout";
 import { globalStyles } from "@/app/styles/styles";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
+import { colors } from "@/app/styles/colors";
 
 const Profile = () => {
   const { isLoaded, isSignedIn } = useAuth();
@@ -19,7 +20,7 @@ const Profile = () => {
   if (!isLoaded) {
     return (
       <View style={globalStyles.container}>
-        <Text>Cargando...</Text>
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }

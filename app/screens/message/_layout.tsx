@@ -1,10 +1,12 @@
-import { Text, View } from "react-native";
+import Chat from "@/app/components/chat/_layout";
+import { globalStyles } from "@/app/styles/styles";
+import { View } from "react-native";
 
 const Message = () => {
   return (
-    <View>
-      <Text>Message</Text>
-    </View>
+    // <View style={globalStyles.container}>
+    <Chat />
+    // </View>
   );
 };
 
