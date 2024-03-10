@@ -8,14 +8,26 @@ import Animated, {
 import React, { useEffect, useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { colors } from "@/app/styles/colors";
-import { AntDesign, Fontisto, Foundation, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome,
+  Fontisto,
+  Foundation,
+  Ionicons,
+} from "@expo/vector-icons";
 import { getUserByClerkId } from "@/app/utils/userDataClerk";
 import useAuthToken from "@/app/hooks/useAuthToken";
 import Swiper from "react-native-swiper";
 import { EventData } from "@/app/interface/event.interface";
 import { useCounterStore } from "@/app/stores/ticketPurcheStore";
+import { v4 as uuidv4 } from "uuid";
 
 import { styles } from "./styles";
+import { useUser } from "@clerk/clerk-expo";
+import {
+  apiCreateRoomBetweenUsers,
+  apiFindRoomBetweenUsers,
+} from "@/app/utils/chat.room";
 
 const IMG_HEIGHT = 600;
 
@@ -52,12 +64,16 @@ interface OwnerType {
   image_url?: string;
   first_name?: string;
   last_name?: string;
+  id?: string;
 }
 
 const TicketEvent: React.FC<TicketEventProps> = ({ data }) => {
   const { setMaxCount } = useCounterStore();
-  const { token } = useAuthToken();
-  const userId = data.ownerId;
+  const { token, sessionId } = useAuthToken();
+  const { user } = useUser();
+
+  const userId = user?.id;
+  const ownerId = data.ownerId;
 
   const [owner, setOwner] = useState<OwnerType | null>(null);
   const [imgCover, setImgCover] = useState<string>(data.images[0]);
@@ -95,7 +111,7 @@ const TicketEvent: React.FC<TicketEventProps> = ({ data }) => {
     const ownerUser = async () => {
       console.log("🚀 ~ useEffect ~ Bring Owner data");
       try {
-        const response = await getUserByClerkId(userId);
+        const response = await getUserByClerkId(ownerId);
         setOwner(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -107,6 +123,33 @@ const TicketEvent: React.FC<TicketEventProps> = ({ data }) => {
     const parts = data.address.split(",").map((part) => part.trim());
     setAddressParts(parts);
   }, [data, data.address, data.ownerId, token]);
+
+  const handleSendMessage = async () => {
+    if (token && sessionId && ownerId && userId) {
+      const existingRoom = await apiFindRoomBetweenUsers(
+        token,
+        sessionId,
+        userId,
+        ownerId
+      );
+
+      let roomId;
+
+      if (existingRoom) {
+        console.log("🚀 ~ existingRoom:", existingRoom);
+        roomId = existingRoom.roomId; // Si existe un room, usa ese ID
+      } else {
+        const newRoomId = uuidv4();
+        await apiCreateRoomBetweenUsers(
+          token,
+          sessionId,
+          userId,
+          ownerId,
+          newRoomId
+        );
+      }
+    }
+  };
 
   return (
     <Animated.View
@@ -170,25 +213,32 @@ const TicketEvent: React.FC<TicketEventProps> = ({ data }) => {
             <Text style={styles.label}>Disponibles</Text>
           </View>
 
-          <TouchableOpacity
-            style={styles.ownerContainer}
-            onPress={() => console.log(owner?.first_name)}
-          >
-            <Image
-              source={{ uri: owner?.image_url }}
-              style={styles.avatarOwner}
-            />
-            <View style={{ marginLeft: 15 }}>
-              <Text style={styles.label}>Organizador</Text>
-              <Text>
-                {owner?.first_name} {owner?.last_name}
-              </Text>
-              <View style={{ flexDirection: "row", gap: 5 }}>
-                <AntDesign name="star" size={16} color="black" />
-                <Text>5.0</Text>
+          <View style={styles.ownerContainer}>
+            <View style={{ flexDirection: "row" }}>
+              <Image
+                source={{ uri: owner?.image_url }}
+                style={styles.avatarOwner}
+              />
+              <View style={{ marginLeft: 15 }}>
+                <Text style={styles.label}>Organizador</Text>
+                <Text>
+                  {owner?.first_name} {owner?.last_name}
+                </Text>
+                <View style={{ flexDirection: "row", gap: 5 }}>
+                  <AntDesign name="star" size={16} color={colors.primary} />
+                  <Text>5.0</Text>
+                </View>
               </View>
             </View>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handleSendMessage}>
+              <FontAwesome
+                name="send"
+                size={24}
+                color={colors.primary}
+                style={{ marginRight: 20 }}
+              />
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.containerStartAndEnd}>
             <View style={styles.containerEvenDate}>

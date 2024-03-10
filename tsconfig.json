@@ -18,7 +18,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js"
-  ],
+, "app/utils"  ],
   "exclude": [
     "node_modules",
     "babel.config.js",

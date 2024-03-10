@@ -3,10 +3,10 @@ import { io } from "socket.io-client";
 import useAuthToken from "../hooks/useAuthToken";
 
 interface Message {
-  id: string;
-  text: string;
-  sender: string;
+  senderId: string;
   receiverId: string;
+  text: string;
+  roomId: string;
 }
 
 const socket = io("http://192.168.0.22:3000", {
@@ -23,7 +23,6 @@ export const useChat = (onNewMessage: (message: Message) => void) => {
       console.log("🚀 ~ connect:", socket.connected);
       if (sessionId) {
         socket.emit("authenticate", sessionId);
-        // socket.emit("authenticate", { sessionId: sessionId });
       }
     });
 
@@ -33,6 +32,7 @@ export const useChat = (onNewMessage: (message: Message) => void) => {
 
     // Escucha por mensajes entrantes
     const messageListener = (message: Message) => {
+      console.log("🚀 ~ messageListener ~ message:", message);
       onNewMessage(message); // Llama al callback con el nuevo mensaje
     };
 

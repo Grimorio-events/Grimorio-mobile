@@ -1,35 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { useChat } from "@/app/services/chatService";
+import { useChat } from "@/app/services/chat.service";
 import { globalStyles } from "@/app/styles/styles";
 import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import { useUser } from "@clerk/clerk-expo";
+import useAuthToken from "@/app/hooks/useAuthToken";
+import { getAllChatRooms } from "@/app/utils/chat.room";
 
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
 
 interface Message {
-  id: string;
-  text: string;
-  sender: string;
   receiverId: string;
+  roomId: string;
+  senderId: string;
+  text?: string;
 }
 
 const Chat: React.FC = () => {
   const { user } = useUser();
-
-  const userIdNull = "user_2dMgQJ6EC3rnuvmYTfgnMOwqUpC";
-  const userIdCamilo = "user_2bpePAP3e4VIUC75OkQkLhxUe6R";
+  const { token, sessionId } = useAuthToken();
+  // Nos asegúramos de que roomsIds siempre sea un array
+  const roomsIds = Array.isArray(user?.unsafeMetadata?.roomId)
+    ? user.unsafeMetadata.roomId
+    : [];
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState("");
+  const [senderId, setSenderId] = useState<string>("");
   const [receiverId, setReceiverId] = useState<string>("");
-  const userName = user?.firstName || "Sender";
+  const [roomId, setRoomId] = useState<string>("");
 
   useEffect(() => {
-    if (user?.id) {
-      setReceiverId(user.id);
-    }
+    const fetchChatRooms = async () => {
+      if (token && sessionId && user?.id && roomsIds) {
+        getAllChatRooms(token, sessionId, roomsIds);
+        // setSenderId(user.id);
+        // setReceiverId();
+        // setRoomId(roomsIds[0]);
+      }
+    };
+
+    fetchChatRooms();
   }, [user]);
 
   const { sendMessage } = useChat((newMessage) =>
@@ -38,14 +49,12 @@ const Chat: React.FC = () => {
 
   const handleSendMessage = () => {
     if (message.trim()) {
-      //   if (user?.id) {
       sendMessage({
-        sender: userName,
-        receiverId: userIdNull,
+        senderId: senderId,
+        receiverId: receiverId,
         text: message,
-        id: uuidv4(),
+        roomId: roomId,
       });
-      //   }
       setMessage("");
     }
   };
@@ -53,10 +62,10 @@ const Chat: React.FC = () => {
   return (
     <View style={globalStyles.container}>
       <View>
-        <Text>Conversacion text v1:</Text>
+        <Text>Reciver:</Text>
         {messages.map((msg, index) => (
           <View key={index} style={{ marginBottom: 10 }}>
-            <Text>{msg.sender}:</Text>
+            <Text>{user?.firstName || "Sender"}:</Text>
             <Text>{msg.text}</Text>
           </View>
         ))}

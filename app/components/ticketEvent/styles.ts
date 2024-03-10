@@ -130,6 +130,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 30,
+    justifyContent: "space-between",
   },
   avatarOwner: {
     width: 50,
