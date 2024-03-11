@@ -3,7 +3,7 @@ import { create } from "zustand";
 type ChatRoom = {
   roomId: string;
   senderId: string;
-  reciverId: string;
+  receiverId: string;
 };
 
 type ChatRoomStore = {
@@ -15,7 +15,7 @@ const chatRoomsStore = create<ChatRoomStore>((set) => ({
   stateChatRoom: {
     roomId: "",
     senderId: "",
-    reciverId: "",
+    receiverId: "",
   },
   updateStateChatRoom: (newState: ChatRoom) =>
     set(() => ({

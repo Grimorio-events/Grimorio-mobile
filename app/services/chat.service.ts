@@ -31,24 +31,29 @@ export const useChat = (onNewMessage: (message: Message) => void) => {
     });
 
     // Escucha por mensajes entrantes
-    const messageListener = (message: Message) => {
-      console.log("🚀 ~ messageListener ~ message:", message);
+    socket.on("message", (message: Message) => {
+      console.log("Incoming message:", message);
       onNewMessage(message); // Llama al callback con el nuevo mensaje
-    };
+    });
 
-    // Recivir mensajes (Receiver)
-    socket.on("message", messageListener);
+    // Escuchar confirmaciones de mensajes enviados.
+    socket.on("message-confirmation", (confirmedMessage) => {
+      console.log("Mensaje confirmado:", confirmedMessage);
+      // Aquí podrías, por ejemplo, actualizar el estado para reflejar que el mensaje ha sido entregado.
+    });
 
     // Limpieza al desmontar el componente
     return () => {
-      socket.off("message", messageListener);
+      socket.off("message");
+      socket.off("message-confirmation");
       socket.off("connect");
+      socket.off("connect_error");
     };
   }, [onNewMessage]);
 
   // Envio de mensajes (Sender)
   const sendMessage = (message: Message) => {
-    console.log("🚀 ~ sendMessage:", message);
+    console.log("🚀 ~ Sending message:", message);
     socket.emit("sendMessage", message);
   };
 

@@ -7,6 +7,7 @@ import ResetPass from "../components/reset/_layout";
 import DetailsPage from "../screens/ticketEvent/[id]";
 import CreateEvent from "../components/createEvent/_layout";
 import ModalLocation from "../components/createEvent/steps/step03.modal";
+import Chat from "../components/chat/[id]";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -28,6 +29,11 @@ const AppNavigator = () => {
         name="DetailsPage"
         component={DetailsPage}
         options={{ headerShown: false, headerTitle: "" }}
+      />
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{ headerShown: true, headerTitle: "Chat" }}
       />
       <Stack.Screen
         name="ResetPass"

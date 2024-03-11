@@ -3,6 +3,14 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   containerMessage: {
+    flex: 1,
+    width: "90%",
+    gap: 20,
+    alignContent: "flex-start",
+    justifyContent: "flex-end",
+    // backgroundColor: colors.alert,
+  },
+  input: {
     flexDirection: "row",
     gap: 10,
   },

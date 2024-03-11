@@ -1,5 +1,5 @@
 import ChatRoom from "@/app/components/chatRoom/_layout";
-import { GET_CHATS_BY_ROOM_IDS } from "@/app/graphql/queries";
+import { GET_CHAT_BY_ROOM_IDS } from "@/app/graphql/queries";
 import { Message } from "@/app/interface/message";
 import { colors } from "@/app/styles/colors";
 import { globalStyles } from "@/app/styles/styles";
@@ -32,11 +32,11 @@ const ChatBox = () => {
     ? user.unsafeMetadata.roomId
     : [];
 
-  const { loading, error, data } = useQuery(GET_CHATS_BY_ROOM_IDS, {
+  const { loading, error, data } = useQuery(GET_CHAT_BY_ROOM_IDS, {
     variables: { roomIds },
   });
 
-  const dataChatRooms = data?.chatRooms;
+  const dataChatRooms = data?.latestMessagesByRooms;
 
   useEffect(() => {
     if (userId && Array.isArray(dataChatRooms)) {
@@ -44,12 +44,12 @@ const ChatBox = () => {
         dataChatRooms,
         userId
       );
-      console.log("🚀 ~ Message ~ adjustedMessages:", adjustedMessages);
+      // console.log("🚀 ~ Message ~ adjustedMessages:", adjustedMessages);
       setdataRooms(adjustedMessages);
     }
   }, [dataChatRooms, userId]);
 
-  if (loading)
+  if (loading || !userId)
     return (
       <View style={globalStyles.container}>
         <ActivityIndicator size="large" color={colors.primary} />
@@ -62,7 +62,9 @@ const ChatBox = () => {
       </View>
     );
 
-  const renderRow = ({ item }: { item: ChatData }) => <ChatRoom item={item} />;
+  const renderRow = ({ item }: { item: ChatData }) => (
+    <ChatRoom item={item} userId={userId} />
+  );
 
   return (
     <GestureHandlerRootView
