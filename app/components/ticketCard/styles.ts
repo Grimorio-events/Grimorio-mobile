@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     height: 220,
-    backgroundColor: colors.backgorundEventList,
+    backgroundColor: colors.background,
   },
   ticketLeft: {
     justifyContent: "space-between",
@@ -111,7 +111,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "transparent",
     borderRightWidth: 10,
-    borderRightColor: colors.backgorundEventList,
+    borderRightColor: colors.background,
     borderStyle: "dotted",
   },
   dottedBorderLeft: {
@@ -121,7 +121,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "transparent",
     borderRightWidth: 10,
-    borderRightColor: colors.backgorundEventList,
+    borderRightColor: colors.background,
     borderStyle: "dotted",
   },
 });

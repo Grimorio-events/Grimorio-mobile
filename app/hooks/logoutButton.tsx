@@ -1,6 +1,6 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../styles/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -13,9 +13,6 @@ export const LogOutButton = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity>
-        <Ionicons name="notifications-outline" size={24} style={styles.icon} />
-      </TouchableOpacity>
       <TouchableOpacity onPress={onPressLogOut} style={styles.btnLogOut}>
         <Text>Log out</Text>
         <MaterialIcons name="logout" size={24} style={styles.icon} />
@@ -28,7 +25,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     backgroundColor: colors.background,
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   btnLogOut: {

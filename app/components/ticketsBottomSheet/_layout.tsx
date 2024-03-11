@@ -1,17 +1,17 @@
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import React, { useMemo, useRef, useState } from "react";
-import { ListingItem } from "@/interfaces/listing";
 import BottomSheet from "@gorhom/bottom-sheet";
 import Listings from "../listings";
 import { colors } from "@/app/styles/colors";
 import { Feather } from "@expo/vector-icons";
+import { EventData } from "@/app/interface/event.interface";
 
 interface Props {
-  listings: ListingItem[];
+  eventData: EventData[];
   category: string;
 }
 
-const TicketsBottomSheet = ({ listings, category }: Props) => {
+const TicketsBottomSheet = ({ category, eventData }: Props) => {
   const [listHeight, setListHeight] = useState(0);
   const [refresh, setRefresh] = useState(0);
   const snapPoints = useMemo(() => ["4%", "100%"], []);
@@ -40,7 +40,11 @@ const TicketsBottomSheet = ({ listings, category }: Props) => {
         }}
       >
         {listHeight > 0 && (
-          <Listings listings={listings} category={category} refresh={refresh} />
+          <Listings
+            eventData={eventData}
+            category={category}
+            refresh={refresh}
+          />
         )}
         <View style={styles.absoluteBtn}>
           <TouchableOpacity onPress={showMap} style={styles.btn}>

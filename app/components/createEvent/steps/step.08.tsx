@@ -1,7 +1,6 @@
 import {
   Dimensions,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,9 +9,7 @@ import {
 import Animated, {
   FadeInRight,
   FadeOutLeft,
-  interpolate,
   useAnimatedRef,
-  useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
 import React, { useEffect, useState } from "react";
@@ -116,15 +113,15 @@ const FinishAndPublish = () => {
 
   useEffect(() => {
     const ownerUser = async () => {
-      if (token) {
-        console.log("🚀 ~ useEffect ~ Bring Owner data");
-        try {
-          const response = await getUserByClerkId(userId, token);
-          setOwner(response.data);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
+      // if (token) {
+      console.log("🚀 ~ useEffect ~ Bring Owner data");
+      try {
+        const response = await getUserByClerkId(userId);
+        setOwner(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
+      // }
     };
     ownerUser();
 

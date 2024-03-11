@@ -16,4 +16,5 @@ export const colors = {
   black: "#2C3333",
   cardBgEvent: "rgba(44, 51, 51, .9)",
   alert: "#FF1700",
+  alertSoft: "#FF6B6B",
 };

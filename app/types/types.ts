@@ -27,5 +27,7 @@ export type RootStackParamList = {
   CreateEvent: undefined;
   LocationEvent: undefined;
   ModalLocation: undefined;
+  ChatRoom: undefined;
+  Chat: { id: string };
   // ... puedes agregar más rutas y sus parámetros aquí
 };

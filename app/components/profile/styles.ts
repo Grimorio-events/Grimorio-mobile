@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   main: {
     flex: 1,
-    // justifyContent: "center",
     backgroundColor: colors.background,
   },
   scrollView: {
@@ -12,46 +11,31 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 30,
-  },
-  buttons: {
-    marginTop: 50,
-    width: "100%",
-    flex: 1,
-  },
-  input: {
     flexDirection: "row",
     alignItems: "center",
+    padding: 30,
+  },
+  containerOptions: {
+    flexDirection: "row",
+    gap: 45,
+    alignContent: "center",
     justifyContent: "center",
   },
-  inputProfle: {
-    width: "100%",
-    height: 30,
-    color: colors.text,
-    paddingHorizontal: 10,
-    fontSize: 15,
-    marginVertical: 7,
+  containerIcon: {
+    alignItems: "center",
     justifyContent: "center",
-    borderBottomColor: colors.secundary,
+    gap: 5,
   },
-  inputEditProfle: {
-    width: "100%",
-    height: 50,
+  textProfile: {
     color: colors.text,
-    paddingHorizontal: 10,
     fontSize: 15,
-    marginVertical: 7,
     justifyContent: "center",
-    borderBottomWidth: 1,
     borderBottomColor: colors.secundary,
   },
   card: {
     backgroundColor: "#fff",
-    // padding: 24,
     borderRadius: 50,
-    marginHorizontal: 24,
+    marginRight: 24,
     marginTop: 24,
     elevation: 2,
     shadowColor: "#000",
@@ -63,13 +47,15 @@ export default StyleSheet.create({
     },
     alignItems: "center",
     gap: 24,
-    marginBottom: 24,
   },
   avatar: {
     width: 100,
     height: 100,
     borderRadius: 50,
     backgroundColor: colors.black,
+  },
+  containerContent: {
+    backgroundColor: "green",
   },
   inputIOS: {
     // estilos para iOS
